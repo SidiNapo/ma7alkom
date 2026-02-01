@@ -34,25 +34,32 @@ const Header = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border/50"
-          : "bg-transparent"
+          ? "bg-background/95 backdrop-blur-xl shadow-2xl border-b border-primary/20"
+          : "bg-background/80 backdrop-blur-sm"
       }`}
     >
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <motion.img
-              src="/logo.png"
-              alt="Ma7alkom"
-              className="h-14 w-auto"
+          <Link to="/" className="flex items-center gap-3 group">
+            <motion.div
+              className="relative"
               whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            />
+              transition={{ duration: 0.3 }}
+            >
+              <motion.img
+                src="/logo.png"
+                alt="Ma7alkom"
+                className="h-20 w-auto drop-shadow-lg"
+              />
+              <motion.div
+                className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
+              />
+            </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-10">
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
@@ -62,9 +69,15 @@ const Header = () => {
               >
                 <Link
                   to={item.path}
-                  className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium text-sm uppercase tracking-wider"
+                  className="relative text-foreground/80 hover:text-primary transition-colors duration-300 font-medium text-sm uppercase tracking-wider group py-2"
                 >
                   {item.name}
+                  <motion.span
+                    className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-primary/50 origin-left"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </Link>
               </motion.div>
             ))}
@@ -87,13 +100,19 @@ const Header = () => {
           </motion.div>
 
           {/* Mobile Menu Button */}
-          <button
+          <motion.button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            className="md:hidden p-3 text-foreground hover:text-primary transition-colors rounded-xl hover:bg-primary/10"
             aria-label="Toggle menu"
+            whileTap={{ scale: 0.9 }}
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            <motion.div
+              animate={{ rotate: isMenuOpen ? 90 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </motion.div>
+          </motion.button>
         </div>
       </div>
 
@@ -104,28 +123,28 @@ const Header = () => {
           height: isMenuOpen ? "auto" : 0,
           opacity: isMenuOpen ? 1 : 0,
         }}
-        transition={{ duration: 0.3 }}
-        className="md:hidden overflow-hidden bg-background/98 backdrop-blur-lg border-b border-border/50"
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className="md:hidden overflow-hidden bg-background/98 backdrop-blur-xl border-b border-primary/20"
       >
-        <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
+        <nav className="container mx-auto px-4 py-8 flex flex-col gap-2">
           {navItems.map((item, index) => (
             <motion.div
               key={item.name}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: isMenuOpen ? 1 : 0, x: isMenuOpen ? 0 : -20 }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: isMenuOpen ? 1 : 0, x: isMenuOpen ? 0 : -30 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <Link
                 to={item.path}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium text-lg py-2 block"
+                className="text-foreground/80 hover:text-primary hover:bg-primary/10 transition-all duration-300 font-medium text-lg py-4 px-4 block rounded-xl"
               >
                 {item.name}
               </Link>
             </motion.div>
           ))}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: isMenuOpen ? 1 : 0, x: isMenuOpen ? 0 : -20 }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: isMenuOpen ? 1 : 0, x: isMenuOpen ? 0 : -30 }}
             transition={{ duration: 0.3, delay: 0.4 }}
           >
             <Link
