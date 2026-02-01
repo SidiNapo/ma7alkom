@@ -37,10 +37,10 @@ const Contact = () => {
         ref={heroRef}
         className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-32"
       >
-        {/* Background with parallax */}
+        {/* Background with modern gradient mesh */}
         <motion.div className="absolute inset-0" style={{ y: heroY }}>
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background" />
-          <div className="absolute inset-0 moroccan-pattern opacity-20" />
+          <div className="absolute inset-0 mesh-gradient opacity-60" />
         </motion.div>
 
         {/* Animated Orbs */}

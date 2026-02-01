@@ -207,9 +207,30 @@
     transform: translateY(-8px);
   }
 
-  /* Moroccan pattern overlay */
+  /* Modern geometric pattern overlay - CSS only, no SVG */
   .moroccan-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z' fill='none' stroke='%23D4AF37' stroke-opacity='0.05'/%3E%3C/svg%3E");
+    background: 
+      radial-gradient(circle at 25% 25%, hsl(43 74% 52% / 0.03) 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, hsl(43 74% 52% / 0.03) 2px, transparent 2px),
+      radial-gradient(circle at 50% 50%, hsl(43 74% 52% / 0.02) 1px, transparent 1px);
+    background-size: 60px 60px, 60px 60px, 30px 30px;
+  }
+
+  /* Premium shimmer gradient pattern */
+  .luxury-pattern {
+    background: 
+      linear-gradient(135deg, transparent 25%, hsl(43 74% 52% / 0.02) 25%, hsl(43 74% 52% / 0.02) 50%, transparent 50%, transparent 75%, hsl(43 74% 52% / 0.02) 75%);
+    background-size: 80px 80px;
+  }
+
+  /* Modern mesh gradient */
+  .mesh-gradient {
+    background: 
+      radial-gradient(at 40% 20%, hsl(43 74% 52% / 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsl(43 50% 40% / 0.06) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsl(43 74% 52% / 0.05) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, hsl(43 60% 45% / 0.04) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsl(43 74% 52% / 0.06) 0px, transparent 50%);
   }
 
   /* Decorative line */

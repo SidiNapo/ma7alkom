@@ -24,7 +24,7 @@ const Hero = () => {
         style={{ y }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
-        <div className="absolute inset-0 moroccan-pattern opacity-20" />
+        <div className="absolute inset-0 mesh-gradient opacity-50" />
       </motion.div>
 
       {/* Animated Glow Orbs */}
