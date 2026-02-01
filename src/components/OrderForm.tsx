@@ -225,19 +225,22 @@ const OrderForm = ({ product }: OrderFormProps) => {
           <motion.button
             type="submit"
             disabled={isSubmitting}
-            className="btn-gold w-full flex items-center justify-center gap-3 text-lg py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full sm:w-auto sm:min-w-[280px] mx-auto flex items-center justify-center gap-2.5 text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl sm:rounded-2xl text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35"
+            style={{
+              background: 'linear-gradient(135deg, hsl(43 74% 52%) 0%, hsl(43 74% 42%) 50%, hsl(43 60% 35%) 100%)',
+            }}
             whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
             whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Envoi en cours...
+                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                <span>Envoi en cours...</span>
               </>
             ) : (
               <>
-                <Send className="w-5 h-5" />
-                Confirmer la commande
+                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Confirmer la commande</span>
               </>
             )}
           </motion.button>
