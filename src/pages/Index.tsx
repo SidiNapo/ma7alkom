@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { GetStartedButton } from "@/components/ui/get-started-button";
+import { ShoppingBag } from "lucide-react";
 
 const Index = () => {
   return (
@@ -173,26 +173,13 @@ const Index = () => {
               Passez votre commande maintenant et recevez vos produits dans les
               plus brefs délais. Livraison rapide et paiement à la livraison.
             </motion.p>
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
+            <GetStartedButton 
+              to="/#produits" 
+              icon={<ShoppingBag className="w-4 h-4 md:w-5 md:h-5" />}
+              className="px-8 py-4 md:px-10 md:py-5 text-base md:text-lg"
             >
-              <Link
-                to="/#produits"
-                className="group relative inline-flex items-center justify-center gap-2 md:gap-3 px-8 py-4 md:px-12 md:py-6 text-base md:text-lg font-semibold text-primary-foreground bg-gradient-to-r from-primary via-primary to-accent rounded-xl overflow-hidden transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30"
-              >
-                <span className="absolute inset-0 bg-gradient-to-r from-accent via-primary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <span className="relative flex items-center gap-2 md:gap-3">
-                  Découvrir nos produits
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-                  </motion.span>
-                </span>
-              </Link>
-            </motion.div>
+              Découvrir nos produits
+            </GetStartedButton>
           </motion.div>
         </div>
       </section>

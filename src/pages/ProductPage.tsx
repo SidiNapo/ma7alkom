@@ -1,10 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ArrowLeft, Check, Truck, Shield, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Check, Truck, Shield, Clock, ChevronLeft, ChevronRight, Home } from "lucide-react";
 import { getProductById, getRecommendedProducts } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import OrderForm from "@/components/OrderForm";
+import { GetStartedButton } from "@/components/ui/get-started-button";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,9 +20,9 @@ const ProductPage = () => {
           <h1 className="font-display text-4xl text-foreground mb-4">
             Produit non trouvé
           </h1>
-          <Link to="/" className="btn-gold">
+          <GetStartedButton to="/" icon={<Home className="w-4 h-4" />}>
             Retour à l'accueil
-          </Link>
+          </GetStartedButton>
         </div>
       </main>
     );

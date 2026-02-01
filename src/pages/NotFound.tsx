@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
+import { GetStartedButton } from "@/components/ui/get-started-button";
 
 const NotFound = () => {
   const location = useLocation();
@@ -34,17 +35,16 @@ const NotFound = () => {
             Désolé, la page que vous recherchez n'existe pas ou a été déplacée.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/" className="btn-gold flex items-center gap-2">
-              <Home className="w-4 h-4" />
+            <GetStartedButton to="/" icon={<Home className="w-4 h-4" />}>
               Retour à l'accueil
-            </Link>
-            <button
+            </GetStartedButton>
+            <GetStartedButton 
+              variant="secondary" 
+              icon={<ArrowLeft className="w-4 h-4" />}
               onClick={() => window.history.back()}
-              className="btn-outline-gold flex items-center gap-2"
             >
-              <ArrowLeft className="w-4 h-4" />
               Page précédente
-            </button>
+            </GetStartedButton>
           </div>
         </motion.div>
       </div>
