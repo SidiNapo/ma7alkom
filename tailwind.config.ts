@@ -61,6 +61,7 @@ export default {
           light: "hsl(var(--navy-light))",
           lighter: "hsl(var(--navy-lighter))",
         },
+        discount: "hsl(var(--discount))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
