@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   shortName: string;
   price: number;
+  originalPrice?: number;
   image: string;
   category: string;
   badge: string;
