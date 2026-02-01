@@ -1,63 +1,22 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Truck, Shield, Clock } from "lucide-react";
-import { useRef } from "react";
+import { GLSLHills } from "@/components/ui/glsl-hills";
 
 const Hero = () => {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-28 md:pt-32"
-    >
-      {/* Animated Background Gradient */}
-      <motion.div
-        className="absolute inset-0"
-        style={{ y }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
-        <div className="absolute inset-0 mesh-gradient opacity-50" />
-      </motion.div>
-
-      {/* Animated Glow Orbs */}
-      <motion.div
-        className="absolute top-1/4 left-[10%] w-72 h-72 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 blur-3xl"
-        animate={{
-          y: [0, -40, 0],
-          x: [0, 20, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-[10%] w-96 h-96 rounded-full bg-gradient-to-tl from-primary/15 to-transparent blur-3xl"
-        animate={{
-          y: [0, 40, 0],
-          x: [0, -30, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/10 via-transparent to-transparent blur-3xl"
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-28 md:pt-32">
+      {/* GLSL Hills Background */}
+      <GLSLHills speed={0.3} cameraZ={130} />
+      
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background pointer-events-none" />
 
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
         className="container mx-auto px-4 md:px-8 relative z-10"
-        style={{ opacity }}
       >
         <div className="max-w-5xl mx-auto text-center">
           {/* Animated Badge */}
@@ -77,7 +36,7 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Main Heading with staggered animation */}
+          {/* Main Heading */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -190,9 +149,8 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative glass-card rounded-3xl p-8 overflow-hidden"
+                className="group relative glass-card rounded-3xl p-8 overflow-hidden backdrop-blur-md"
               >
-                {/* Hover gradient overlay */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 />
