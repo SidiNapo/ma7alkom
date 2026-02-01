@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
+import Products from "./pages/Products";
 import ProductPage from "./pages/ProductPage";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
@@ -35,6 +36,7 @@ const AppContent = () => {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/produits" element={<Products />} />
             <Route path="/produit/:id" element={<ProductPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/a-propos" element={<About />} />
