@@ -7,12 +7,12 @@ import { ArrowRight } from "lucide-react";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
       <Hero />
 
       {/* Products Section */}
-      <section id="produits" className="py-24 scroll-mt-32">
+      <section id="produits" className="py-16 md:py-24 scroll-mt-32 overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
           {/* Section Header */}
           <motion.div
@@ -20,28 +20,28 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center mb-20"
+            className="text-center mb-12 md:mb-20"
           >
             <motion.span
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="inline-block text-primary text-sm font-medium uppercase tracking-wider mb-4 px-4 py-2 bg-primary/10 rounded-full"
+              className="inline-block text-primary text-xs md:text-sm font-medium uppercase tracking-wider mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 bg-primary/10 rounded-full"
             >
               Notre Collection
             </motion.span>
-            <h2 className="font-display text-4xl md:text-6xl text-foreground mb-6">
+            <h2 className="font-display text-2xl sm:text-4xl md:text-6xl text-foreground mb-4 md:mb-6">
               Nos Produits <span className="text-gradient-gold">Exclusifs</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-lg px-4">
               Découvrez notre sélection soigneusement choisie de produits de qualité,
               conçus pour améliorer votre quotidien.
             </p>
           </motion.div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
             {products.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />
             ))}
@@ -50,10 +50,10 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-24 bg-card/50 relative overflow-hidden">
-        {/* Background decoration */}
+      <section className="py-16 md:py-24 bg-card/50 relative overflow-hidden">
+        {/* Background decoration - constrained */}
         <motion.div
-          className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+          className="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-primary/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 10, repeat: Infinity }}
         />
@@ -64,23 +64,23 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center mb-20"
+            className="text-center mb-12 md:mb-20"
           >
             <motion.span
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="inline-block text-primary text-sm font-medium uppercase tracking-wider mb-4 px-4 py-2 bg-primary/10 rounded-full"
+              className="inline-block text-primary text-xs md:text-sm font-medium uppercase tracking-wider mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 bg-primary/10 rounded-full"
             >
               Pourquoi nous choisir
             </motion.span>
-            <h2 className="font-display text-4xl md:text-6xl text-foreground mb-6">
+            <h2 className="font-display text-2xl sm:text-4xl md:text-6xl text-foreground mb-4 md:mb-6">
               L'Excellence au <span className="text-gradient-gold">Service</span>
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
             {[
               {
                 emoji: "💎",
@@ -114,19 +114,19 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="glass-card rounded-3xl p-8 text-center group cursor-pointer"
+                className="glass-card rounded-2xl md:rounded-3xl p-4 md:p-8 text-center group cursor-pointer"
               >
                 <motion.span
-                  className="text-5xl block mb-6"
+                  className="text-3xl md:text-5xl block mb-3 md:mb-6"
                   whileHover={{ scale: 1.2, rotate: 10 }}
                   transition={{ duration: 0.3 }}
                 >
                   {item.emoji}
                 </motion.span>
-                <h3 className="font-display text-xl text-foreground mb-4">
+                <h3 className="font-display text-sm md:text-xl text-foreground mb-2 md:mb-4">
                   {item.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-xs md:text-sm leading-relaxed line-clamp-3">
                   {item.description}
                 </p>
               </motion.div>
@@ -136,11 +136,11 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 mesh-gradient opacity-40" />
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-primary/10 via-transparent to-transparent blur-3xl"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] rounded-full bg-gradient-radial from-primary/10 via-transparent to-transparent blur-3xl"
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 8, repeat: Infinity }}
           />
@@ -159,7 +159,7 @@ const Index = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-display text-4xl md:text-6xl text-foreground mb-8"
+              className="font-display text-2xl sm:text-4xl md:text-6xl text-foreground mb-6 md:mb-8"
             >
               Prêt à <span className="text-gradient-gold">Commander</span> ?
             </motion.h2>
@@ -168,26 +168,29 @@ const Index = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-muted-foreground text-xl mb-12 max-w-2xl mx-auto"
+              className="text-muted-foreground text-sm md:text-xl mb-8 md:mb-12 max-w-2xl mx-auto px-4"
             >
               Passez votre commande maintenant et recevez vos produits dans les
               plus brefs délais. Livraison rapide et paiement à la livraison.
             </motion.p>
             <motion.div
-              whileHover={{ scale: 1.05, y: -3 }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
               <Link
                 to="/#produits"
-                className="btn-gold inline-flex items-center gap-3 text-lg px-12 py-6 shadow-xl shadow-primary/20"
+                className="group relative inline-flex items-center justify-center gap-2 md:gap-3 px-8 py-4 md:px-12 md:py-6 text-base md:text-lg font-semibold text-primary-foreground bg-gradient-to-r from-primary via-primary to-accent rounded-xl overflow-hidden transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30"
               >
-                Découvrir nos produits
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.span>
+                <span className="absolute inset-0 bg-gradient-to-r from-accent via-primary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <span className="relative flex items-center gap-2 md:gap-3">
+                  Découvrir nos produits
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                  </motion.span>
+                </span>
               </Link>
             </motion.div>
           </motion.div>

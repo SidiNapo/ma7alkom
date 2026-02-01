@@ -118,34 +118,40 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 md:mb-20"
           >
             <motion.div
-              whileHover={{ scale: 1.05, y: -2 }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
+              className="w-full sm:w-auto"
             >
               <Link
                 to="/#produits"
-                className="btn-gold flex items-center gap-3 text-lg px-10 py-5 w-full sm:w-auto justify-center shadow-xl shadow-primary/20"
+                className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 text-base md:text-lg font-semibold text-primary-foreground bg-gradient-to-r from-primary via-primary to-accent rounded-xl overflow-hidden transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30"
               >
-                Découvrir nos produits
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.span>
+                <span className="absolute inset-0 bg-gradient-to-r from-accent via-primary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <span className="relative flex items-center gap-3">
+                  Découvrir nos produits
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.span>
+                </span>
               </Link>
             </motion.div>
             <motion.div
-              whileHover={{ scale: 1.05, y: -2 }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
+              className="w-full sm:w-auto"
             >
               <Link
                 to="/contact"
-                className="btn-outline-gold flex items-center gap-2 text-lg px-10 py-5 w-full sm:w-auto justify-center"
+                className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 text-base md:text-lg font-semibold text-primary border-2 border-primary/50 rounded-xl overflow-hidden transition-all duration-300 hover:border-primary hover:bg-primary/5"
               >
-                Nous contacter
+                <span className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative">Nous contacter</span>
               </Link>
             </motion.div>
           </motion.div>
