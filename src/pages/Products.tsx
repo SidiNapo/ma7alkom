@@ -2,7 +2,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
-import { Package, Truck, Shield } from "lucide-react";
+import { Package, Truck, Shield, MessageSquare } from "lucide-react";
+import { GetStartedButton } from "@/components/ui/get-started-button";
 const Products = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const {
@@ -214,14 +215,13 @@ const Products = () => {
               Notre équipe est à votre disposition pour vous guider vers le produit
               qui correspond parfaitement à vos besoins.
             </p>
-            <motion.a href="/contact" whileHover={{
-            scale: 1.05,
-            y: -3
-          }} whileTap={{
-            scale: 0.98
-          }} className="btn-gold inline-flex items-center gap-2 text-lg px-8 py-4">
+            <GetStartedButton 
+              to="/contact" 
+              icon={<MessageSquare className="w-5 h-5" />}
+              className="text-lg px-8 py-4"
+            >
               Contactez-nous
-            </motion.a>
+            </GetStartedButton>
           </motion.div>
         </div>
       </section>

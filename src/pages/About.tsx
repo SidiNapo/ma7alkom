@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { useRef } from "react";
+import { GetStartedButton } from "@/components/ui/get-started-button";
 
 const About = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -511,13 +511,13 @@ const About = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Link
-                  to="/#produits"
-                  className="btn-gold inline-flex items-center gap-3 text-lg px-10 py-5"
+                <GetStartedButton 
+                  to="/#produits" 
+                  icon={<ShoppingBag className="w-5 h-5" />}
+                  className="text-lg px-10 py-5"
                 >
                   Voir nos produits
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
+                </GetStartedButton>
               </motion.div>
             </div>
           </motion.div>

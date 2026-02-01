@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { MapPin, Phone, Mail, Send, Clock, MessageSquare } from "lucide-react";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
+import { GetStartedButton } from "@/components/ui/get-started-button";
 
 const Contact = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -257,27 +258,16 @@ const Contact = () => {
                     />
                   </motion.div>
 
-                  <motion.button
+                  <GetStartedButton
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn-gold w-full flex items-center justify-center gap-3 py-5 text-lg"
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    isLoading={isSubmitting}
+                    loadingText="Envoi en cours..."
+                    icon={<Send className="w-5 h-5" />}
+                    className="w-full py-5 text-lg"
                   >
-                    {isSubmitting ? (
-                      <motion.span
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      >
-                        ⏳
-                      </motion.span>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Envoyer le message
-                      </>
-                    )}
-                  </motion.button>
+                    Envoyer le message
+                  </GetStartedButton>
                 </div>
               </form>
             </motion.div>

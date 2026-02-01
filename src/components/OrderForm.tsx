@@ -2,8 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
 import { cityPrices, CityPrice } from "@/data/cities";
-import { Check, Loader2, Send, MapPin, Truck } from "lucide-react";
+import { Check, Send, MapPin, Truck } from "lucide-react";
 import { toast } from "sonner";
+import { GetStartedButton } from "@/components/ui/get-started-button";
 
 interface OrderFormProps {
   product: Product;
@@ -222,28 +223,16 @@ const OrderForm = ({ product }: OrderFormProps) => {
           </div>
 
           {/* Submit Button */}
-          <motion.button
+          <GetStartedButton
             type="submit"
             disabled={isSubmitting}
-            className="w-full sm:w-auto sm:min-w-[280px] mx-auto flex items-center justify-center gap-2.5 text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl sm:rounded-2xl text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35"
-            style={{
-              background: 'linear-gradient(135deg, hsl(43 74% 52%) 0%, hsl(43 74% 42%) 50%, hsl(43 60% 35%) 100%)',
-            }}
-            whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-            whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+            isLoading={isSubmitting}
+            loadingText="Envoi en cours..."
+            icon={<Send className="w-4 h-4 sm:w-5 sm:h-5" />}
+            className="w-full sm:w-auto sm:min-w-[280px] mx-auto text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-3.5"
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-                <span>Envoi en cours...</span>
-              </>
-            ) : (
-              <>
-                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Confirmer la commande</span>
-              </>
-            )}
-          </motion.button>
+            Confirmer la commande
+          </GetStartedButton>
 
           {/* Payment Info */}
           <p className="text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
