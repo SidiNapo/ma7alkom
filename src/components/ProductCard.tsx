@@ -16,12 +16,12 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -10 }}
-      className="group"
+      className="group h-full"
     >
-      <Link to={`/produit/${product.id}`} className="block">
-        <div className="glass-card rounded-3xl overflow-hidden transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-primary/10">
+      <Link to={`/produit/${product.id}`} className="block h-full">
+        <div className="glass-card rounded-3xl overflow-hidden transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-primary/10 h-full flex flex-col">
           {/* Image Container */}
-          <div className="relative aspect-square overflow-hidden">
+          <div className="relative aspect-square overflow-hidden flex-shrink-0">
             {/* Badge */}
             <div className="absolute top-4 left-4 z-10">
               <motion.span
@@ -55,24 +55,24 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           </div>
 
           {/* Content */}
-          <div className="p-6">
+          <div className="p-6 flex flex-col flex-grow">
             {/* Category */}
             <span className="text-primary text-xs font-medium uppercase tracking-wider">
               {product.category}
             </span>
 
             {/* Title */}
-            <h3 className="font-display text-xl text-foreground mt-2 mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+            <h3 className="font-display text-xl text-foreground mt-2 mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2 min-h-[3.5rem]">
               {product.shortName}
             </h3>
 
             {/* Description */}
-            <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-4">
+            <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-4 min-h-[2.5rem]">
               {product.description}
             </p>
 
             {/* Price & CTA */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-auto">
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-display text-primary font-bold">
                   {product.price}
