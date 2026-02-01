@@ -118,39 +118,43 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 md:mb-20"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 mb-16 md:mb-20 px-4"
           >
             <motion.div
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="w-full sm:w-auto"
             >
               <Link
                 to="/#produits"
-                className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 text-base md:text-lg font-semibold text-primary-foreground bg-gradient-to-r from-primary via-primary to-accent rounded-xl overflow-hidden transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30"
+                className="group relative inline-flex items-center justify-center gap-2.5 w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-primary-foreground rounded-2xl overflow-hidden transition-all duration-500 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40"
+                style={{
+                  background: 'linear-gradient(135deg, hsl(43 74% 52%) 0%, hsl(43 74% 42%) 50%, hsl(43 60% 35%) 100%)',
+                }}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-accent via-primary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <span className="relative flex items-center gap-3">
+                <span className="absolute inset-0 bg-gradient-to-r from-accent via-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, white 0%, transparent 60%)' }} />
+                <span className="relative flex items-center gap-2 sm:gap-2.5">
                   Découvrir nos produits
                   <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </motion.span>
                 </span>
               </Link>
             </motion.div>
             <motion.div
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="w-full sm:w-auto"
             >
               <Link
                 to="/contact"
-                className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 text-base md:text-lg font-semibold text-primary border-2 border-primary/50 rounded-xl overflow-hidden transition-all duration-300 hover:border-primary hover:bg-primary/5"
+                className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-primary bg-transparent border-2 border-primary/40 rounded-2xl overflow-hidden transition-all duration-500 hover:border-primary hover:bg-primary/10 backdrop-blur-sm"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <span className="relative">Nous contacter</span>
               </Link>
             </motion.div>
