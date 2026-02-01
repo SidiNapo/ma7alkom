@@ -214,17 +214,7 @@ const Footer = () => {
           }} className="text-muted-foreground text-sm text-center md:text-left">
               © {currentYear} Ma7alkom. Tous droits réservés.
             </motion.p>
-            <motion.div initial={{
-            opacity: 0
-          }} whileInView={{
-            opacity: 1
-          }} viewport={{
-            once: true
-          }} className="flex items-center gap-3">
-              <span className="text-muted-foreground text-sm">🚀 Livraison rapide</span>
-              <span className="text-primary">•</span>
-              <span className="text-muted-foreground text-sm">💰 Paiement à la livraison</span>
-            </motion.div>
+            
           </div>
         </div>
       </div>
