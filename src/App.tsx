@@ -31,9 +31,9 @@ const AppContent = () => {
   return (
     <>
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen overflow-x-hidden">
         <Header />
-        <div className="flex-1">
+        <div className="flex-1 overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/produits" element={<Products />} />
