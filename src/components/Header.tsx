@@ -38,7 +38,7 @@ const Header = () => {
     ease: "easeOut"
   }} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "bg-background/95 backdrop-blur-xl shadow-2xl border-b border-primary/20" : "bg-background/80 backdrop-blur-sm"}`}>
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-20 md:h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <motion.div className="relative" whileHover={{
@@ -46,7 +46,7 @@ const Header = () => {
           }} transition={{
             duration: 0.3
           }}>
-              <motion.img alt="Ma7alkom" className="h-20 w-auto drop-shadow-lg" src="/lovable-uploads/bb29e4ea-2915-4b35-9d5f-cfc5950f3a37.png" />
+              <motion.img alt="Ma7alkom" className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-lg" src="/lovable-uploads/bb29e4ea-2915-4b35-9d5f-cfc5950f3a37.png" />
               <motion.div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             </motion.div>
           </Link>
