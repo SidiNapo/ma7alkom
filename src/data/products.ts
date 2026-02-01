@@ -7,7 +7,12 @@ export const products: Product[] = [
     shortName: "Fil Dentaire (50 Pièces)",
     price: 49,
     originalPrice: 79,
-    image: "/images/fil-dentaire.jpg",
+    image: "/images/products/fil-dentaire-1.jpg",
+    gallery: [
+      "/images/products/fil-dentaire-1.jpg",
+      "/images/products/fil-dentaire-2.jpg",
+      "/images/products/fil-dentaire-3.jpg"
+    ],
     category: "Hygiène Buccale",
     badge: "Populaire",
     description: "Assurez une hygiène bucco-dentaire irréprochable où que vous soyez grâce à ce lot de 50 fils dentaires jetables conçus pour un nettoyage profond et efficace entre les dents.",
@@ -33,7 +38,11 @@ Chaque fil dentaire élimine en douceur la plaque dentaire et les résidus alime
     shortName: "Spray Buccal (6 Saveurs)",
     price: 79,
     originalPrice: 119,
-    image: "/images/spray-buccal.jpg",
+    image: "/images/products/spray-buccal-1.jpg",
+    gallery: [
+      "/images/products/spray-buccal-1.jpg",
+      "/images/products/spray-buccal-2.jpg"
+    ],
     category: "Hygiène Buccale",
     badge: "Best-Seller",
     description: "Profitez d'une haleine fraîche instantanée à tout moment de la journée grâce à ce lot de 6 sprays buccaux aux saveurs variées : Pêche, Raisin, Litchi, Menthe, Pastèque et Orange.",
@@ -59,7 +68,12 @@ Formulés pour neutraliser efficacement les mauvaises odeurs, ces sprays buccaux
     shortName: "Tondeuse MLLIQUEA",
     price: 89,
     originalPrice: 149,
-    image: "/images/tondeuse.jpg",
+    image: "/images/products/tondeuse-1.jpg",
+    gallery: [
+      "/images/products/tondeuse-1.jpg",
+      "/images/products/tondeuse-2.jpg",
+      "/images/products/tondeuse-3.jpg"
+    ],
     category: "Soins Personnels",
     badge: "Premium",
     description: "Prenez soin de votre apparence en toute sécurité avec la tondeuse sans fil MLLIQUEA, spécialement conçue pour le nez, les oreilles, les sourcils et les zones délicates du visage.",
@@ -87,7 +101,11 @@ Grâce à son design compact et ergonomique, cette tondeuse assure une prise en 
     shortName: "Protège-Brûleurs (20 Pièces)",
     price: 59,
     originalPrice: 99,
-    image: "/images/protege-bruleurs.jpg",
+    image: "/images/products/protege-bruleurs-1.jpg",
+    gallery: [
+      "/images/products/protege-bruleurs-1.jpg",
+      "/images/products/protege-bruleurs-2.jpg"
+    ],
     category: "Cuisine",
     badge: "Pratique",
     description: "Gardez votre cuisinière propre et protégée grâce à ces couvercles de brûleur de gaz jetables conçus pour simplifier l'entretien de votre cuisine.",
