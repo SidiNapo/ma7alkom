@@ -218,12 +218,12 @@ const GLSLHills = ({
 
   return (
     <div 
-      className="absolute inset-0 overflow-hidden"
+      className="absolute inset-0 overflow-hidden pointer-events-none"
       style={{ width, height }}
     >
       <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full pointer-events-none"
       />
     </div>
   );
