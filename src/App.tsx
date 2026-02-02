@@ -36,11 +36,13 @@ const ScrollToTop = () => {
 
     root.style.overflow = "";
     root.style.position = "";
+    root.style.touchAction = "";
 
     body.style.overflow = "";
     body.style.position = "";
     body.style.top = "";
     body.style.width = "";
+    body.style.touchAction = "";
   }, [pathname]);
 
   return null;

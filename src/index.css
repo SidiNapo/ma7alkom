@@ -112,7 +112,7 @@
   }
 
   html {
-    overflow-x: hidden;
+    /* No overflow-x: hidden here - keep only on body to avoid iOS scroll issues */
   }
 
   body {
@@ -120,6 +120,8 @@
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+    touch-action: manipulation;
   }
 
   /* Ensure the app uses the viewport width and avoids nested scroll containers.
