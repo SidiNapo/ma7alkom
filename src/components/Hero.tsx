@@ -126,27 +126,29 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative glass-card rounded-3xl p-8 overflow-hidden backdrop-blur-md"
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="group relative glass-card rounded-2xl p-5 sm:p-6 overflow-hidden backdrop-blur-md border border-primary/10 hover:border-primary/30 transition-all duration-300"
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
                 
-                <div className="relative z-10">
+                <div className="relative z-10 flex items-center gap-4">
                   <motion.div
-                    className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mb-5 mx-auto"
-                    whileHover={{ rotate: 5, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0"
+                    whileHover={{ rotate: 5, scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <feature.icon className="w-7 h-7 text-primary" />
+                    <feature.icon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-primary" />
                   </motion.div>
-                  <h3 className="font-display text-xl text-foreground mb-3">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {feature.description}
-                  </p>
+                  <div className="text-left">
+                    <h3 className="font-display text-base sm:text-lg text-foreground mb-0.5">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground text-xs sm:text-sm">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
