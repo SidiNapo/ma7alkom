@@ -23,7 +23,7 @@ const Header = () => {
   
   const navItems = [
     { name: "Accueil", path: "/" },
-    { name: "Produits", path: "/#produits" },
+    { name: "Produits", path: "/produits" },
     { name: "À Propos", path: "/a-propos" },
     { name: "Contact", path: "/contact" }
   ];
@@ -51,7 +51,7 @@ const Header = () => {
               <motion.img 
                 alt="Ma7alkom" 
                 className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-lg" 
-                src="/lovable-uploads/bb29e4ea-2915-4b35-9d5f-cfc5950f3a37.png" 
+                src="/logo.png" 
               />
               <motion.div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             </motion.div>
@@ -90,7 +90,7 @@ const Header = () => {
             className="hidden md:block"
           >
             <GetStartedButton 
-              to="/#produits" 
+              to="/produits" 
               icon={<ShoppingBag className="w-4 h-4" />}
               className="text-sm"
             >
@@ -142,7 +142,7 @@ const Header = () => {
             className="mt-4"
           >
             <GetStartedButton 
-              to="/#produits" 
+              to="/produits" 
               icon={<ShoppingBag className="w-4 h-4" />}
               className="w-full justify-center"
             >

@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
 
       {/* Main Footer */}
-      <div className="container mx-auto px-4 md:px-8 py-20 relative z-10">
+      <div className="container mx-auto px-4 md:px-8 py-14 md:py-20 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
           <motion.div initial={{
@@ -25,7 +25,7 @@ const Footer = () => {
             <Link to="/" className="inline-block mb-8">
               <motion.img alt="Ma7alkom" className="h-20 w-auto" whileHover={{
               scale: 1.05
-            }} src="/lovable-uploads/d755354b-f3dc-4161-b54a-f6e46d822de9.png" />
+            }} src="/logo.png" />
             </Link>
             <p className="text-muted-foreground leading-relaxed mb-8">
               Votre boutique en ligne de confiance au Maroc. Des produits de qualité
@@ -54,7 +54,7 @@ const Footer = () => {
               path: "/"
             }, {
               name: "Nos Produits",
-              path: "/#produits"
+              path: "/produits"
             }, {
               name: "À Propos",
               path: "/a-propos"
@@ -163,8 +163,8 @@ const Footer = () => {
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <Phone className="w-5 h-5 text-primary" />
                 </div>
-                <a href="tel:+212600000000" className="text-muted-foreground hover:text-primary transition-colors">
-                  +212 6 00 00 00 00
+                <a href="tel:+212780712169" className="text-muted-foreground hover:text-primary transition-colors">
+                  +212 7 80 71 21 69
                 </a>
               </motion.li>
               <motion.li className="flex items-center gap-4" whileHover={{

@@ -81,7 +81,7 @@ const Hero = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mb-16 md:mb-20 px-4"
           >
             <GetStartedButton 
-              to="/#produits" 
+              to="/produits" 
               icon={<ShoppingBag className="w-4 h-4" />}
               className="w-full sm:w-auto"
             >

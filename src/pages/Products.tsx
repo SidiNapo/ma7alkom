@@ -1,19 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
 import { Package, Truck, Shield, MessageSquare } from "lucide-react";
 import { GetStartedButton } from "@/components/ui/get-started-button";
 const Products = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const {
-    scrollYProgress
-  } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const features = [{
     icon: Package,
     title: "Produits Sélectionnés",
@@ -29,17 +19,15 @@ const Products = () => {
   }];
   return <main className="min-h-screen">
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-32">
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-32">
         {/* Background */}
-        <motion.div className="absolute inset-0" style={{
-        y: heroY
-      }}>
+        <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background" />
           <div className="absolute inset-0 mesh-gradient opacity-60" />
-        </motion.div>
+        </div>
 
         {/* Animated Orbs */}
-        <motion.div className="absolute top-20 right-1/4 w-72 h-72 rounded-full bg-gradient-radial from-primary/20 via-primary/5 to-transparent blur-3xl" animate={{
+        <motion.div className="pointer-events-none absolute top-20 right-1/4 w-72 h-72 rounded-full bg-gradient-radial from-primary/20 via-primary/5 to-transparent blur-3xl" animate={{
         scale: [1, 1.3, 1],
         opacity: [0.3, 0.5, 0.3]
       }} transition={{
@@ -47,7 +35,7 @@ const Products = () => {
         repeat: Infinity,
         ease: "easeInOut"
       }} />
-        <motion.div className="absolute bottom-20 left-1/4 w-96 h-96 rounded-full bg-gradient-radial from-accent/15 via-accent/5 to-transparent blur-3xl" animate={{
+        <motion.div className="pointer-events-none absolute bottom-20 left-1/4 w-96 h-96 rounded-full bg-gradient-radial from-accent/15 via-accent/5 to-transparent blur-3xl" animate={{
         scale: [1.2, 1, 1.2],
         opacity: [0.2, 0.4, 0.2]
       }} transition={{
@@ -57,9 +45,7 @@ const Products = () => {
       }} />
 
         {/* Content */}
-        <motion.div className="container mx-auto px-4 md:px-8 relative z-10 text-center" style={{
-        opacity: heroOpacity
-      }}>
+        <motion.div className="container mx-auto px-4 md:px-8 relative z-10 text-center">
           <motion.div initial={{
           opacity: 0,
           scale: 0.9
@@ -82,7 +68,7 @@ const Products = () => {
         }} transition={{
           duration: 0.7,
           delay: 0.1
-        }} className="font-display text-5xl md:text-7xl text-foreground mb-6">
+        }} className="font-display text-4xl sm:text-5xl md:text-7xl text-foreground mb-6">
             Nos <span className="text-gradient-gold">Produits</span>
           </motion.h1>
 
@@ -135,7 +121,7 @@ const Products = () => {
       </section>
 
       {/* Products Grid Section */}
-      <section className="py-20 relative">
+      <section className="py-16 md:py-24 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" animate={{
@@ -175,7 +161,7 @@ const Products = () => {
           </motion.div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
             {products.map((product, index) => <ProductCard key={product.id} product={product} index={index} />)}
           </div>
         </div>

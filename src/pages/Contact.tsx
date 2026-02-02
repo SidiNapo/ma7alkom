@@ -75,7 +75,7 @@ const Contact = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-display text-5xl md:text-7xl text-foreground mb-6"
+              className="font-display text-4xl sm:text-5xl md:text-7xl text-foreground mb-6"
             >
               Nous sommes à votre{" "}
               <span className="text-gradient-gold">écoute</span>
@@ -108,7 +108,7 @@ const Contact = () => {
               {
                 icon: Phone,
                 title: "Téléphone",
-                content: "+212 6 00 00 00 00",
+                  content: "+212 7 80 71 21 69",
                 subtext: "Lun - Sam, 9h - 18h",
                 color: "from-primary/20 to-primary/10",
               },
@@ -329,15 +329,18 @@ const Contact = () => {
                   Consultez notre FAQ ou appelez-nous directement pour une
                   assistance immédiate.
                 </p>
-                <motion.a
-                  href="tel:+212600000000"
-                  className="btn-outline-gold inline-flex items-center gap-3 text-lg"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Phone className="w-5 h-5" />
-                  Appeler maintenant
-                </motion.a>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                  <GetStartedButton
+                    variant="secondary"
+                    href="tel:+212780712169"
+                    icon={<Phone className="w-5 h-5" />}
+                    size="lg"
+                    fullWidth
+                    className="justify-center"
+                  >
+                    Appeler maintenant
+                  </GetStartedButton>
+                </motion.div>
               </motion.div>
 
               {/* Map or additional image could go here */}

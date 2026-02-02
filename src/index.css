@@ -113,13 +113,24 @@
 
   html {
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
   }
 
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure the app uses the viewport width and avoids nested scroll containers.
+     This also overrides any leftover Vite template styles that might have been applied to #root. */
+  #root {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    text-align: initial;
+    overflow: visible;
   }
 
   h1, h2, h3, h4, h5, h6 {

@@ -21,7 +21,7 @@ const NotFound = () => {
           className="text-center max-w-lg mx-auto"
         >
           <motion.span
-            className="text-9xl font-display text-primary block mb-8"
+            className="text-7xl sm:text-9xl font-display text-primary block mb-8"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}

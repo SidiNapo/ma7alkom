@@ -54,7 +54,7 @@ const About = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-display text-5xl md:text-7xl text-foreground mb-6"
+              className="font-display text-4xl sm:text-5xl md:text-7xl text-foreground mb-6"
             >
               Découvrez{" "}
               <span className="text-gradient-gold">Ma7alkom</span>
@@ -512,7 +512,7 @@ const About = () => {
                 whileTap={{ scale: 0.98 }}
               >
                 <GetStartedButton 
-                  to="/#produits" 
+                  to="/produits" 
                   icon={<ShoppingBag className="w-5 h-5" />}
                   className="text-lg px-10 py-5"
                 >

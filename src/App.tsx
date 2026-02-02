@@ -13,6 +13,7 @@ import ProductPage from "./pages/ProductPage";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import WhatsAppFloatingButton from "./components/WhatsAppFloatingButton";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const AppContent = () => {
       <ScrollToTop />
       <div className="flex flex-col min-h-screen overflow-x-hidden">
         <Header />
+        <WhatsAppFloatingButton />
         <div className="flex-1 overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Index />} />

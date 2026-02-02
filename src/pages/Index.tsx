@@ -174,7 +174,7 @@ const Index = () => {
               plus brefs délais. Livraison rapide et paiement à la livraison.
             </motion.p>
             <GetStartedButton 
-              to="/#produits" 
+              to="/produits" 
               icon={<ShoppingBag className="w-4 h-4 md:w-5 md:h-5" />}
               className="px-8 py-4 md:px-10 md:py-5 text-base md:text-lg"
             >

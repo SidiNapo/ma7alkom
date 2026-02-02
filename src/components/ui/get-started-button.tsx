@@ -14,6 +14,11 @@ interface GetStartedButtonProps {
   variant?: "primary" | "secondary";
   icon?: React.ReactNode;
   to?: string;
+  href?: string;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
+  size?: "sm" | "md" | "lg";
+  fullWidth?: boolean;
 }
 
 export function GetStartedButton({ 
@@ -26,9 +31,26 @@ export function GetStartedButton({
   loadingText,
   variant = "primary",
   icon,
-  to
+  to,
+  href,
+  target,
+  rel,
+  size = "md",
+  fullWidth = false,
 }: GetStartedButtonProps) {
   const isDisabled = disabled || isLoading;
+
+  const sizeClasses =
+    size === "sm"
+      ? "h-10 px-5 text-sm"
+      : size === "lg"
+        ? "h-12 px-7 text-base"
+        : "h-11 px-6 text-sm";
+
+  const widthClasses = fullWidth ? "w-full sm:w-auto" : "";
+
+  const commonInteractive =
+    "inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background";
 
   if (variant === "secondary") {
     const content = (
@@ -47,13 +69,33 @@ export function GetStartedButton({
     );
 
     const buttonClasses = cn(
-      "group relative overflow-hidden bg-transparent border-2 border-primary/40 hover:border-primary hover:bg-primary/10 text-primary h-11 px-6 rounded-xl",
+      "group relative overflow-hidden rounded-2xl",
+      sizeClasses,
+      widthClasses,
+      "bg-card/20 backdrop-blur-md border border-primary/35 text-primary",
+      "hover:bg-primary/10 hover:border-primary/60",
+      "shadow-lg shadow-black/15",
       className
     );
 
-    if (to) {
+    const Anchor = href ? (
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        aria-disabled={isDisabled || undefined}
+        tabIndex={isDisabled ? -1 : 0}
+        className={cn(commonInteractive, "transition-colors", isDisabled && "pointer-events-none opacity-50", buttonClasses)}
+      >
+        {content}
+      </a>
+    ) : null;
+
+    if (Anchor) return Anchor;
+
+    if (to && !isDisabled) {
       return (
-        <Link to={to} className={cn("inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", buttonClasses)}>
+        <Link to={to} className={cn(commonInteractive, "transition-colors", buttonClasses)}>
           {content}
         </Link>
       );
@@ -91,20 +133,36 @@ export function GetStartedButton({
   );
 
   const buttonClasses = cn(
-    "group relative overflow-hidden h-11 px-6 rounded-xl",
-    "bg-gradient-to-r from-primary via-primary to-accent",
-    "shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35",
+    "group relative overflow-hidden rounded-2xl",
+    sizeClasses,
+    widthClasses,
+    "bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground",
+    "ring-1 ring-white/10",
+    "shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/35",
+    "before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/25 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 group-hover:before:opacity-100",
     className
   );
 
-  if (to && !isLoading) {
+  if (href && !isLoading) {
     return (
-      <Link 
-        to={to} 
-        className={cn(
-          "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-primary-foreground",
-          buttonClasses
-        )}
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        aria-disabled={isDisabled || undefined}
+        tabIndex={isDisabled ? -1 : 0}
+        className={cn(commonInteractive, "transition-colors", isDisabled && "pointer-events-none opacity-50", buttonClasses)}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  if (to && !isLoading && !isDisabled) {
+    return (
+      <Link
+        to={to}
+        className={cn(commonInteractive, "transition-colors", buttonClasses)}
       >
         {content}
       </Link>
