@@ -40,7 +40,7 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-20 md:h-24">
+        <div className="flex items-center justify-between h-22 md:h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <motion.div 
@@ -50,7 +50,7 @@ const Header = () => {
             >
               <motion.img 
                 alt="Ma7alkom" 
-                className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-lg" 
+                className="h-16 sm:h-18 md:h-20 lg:h-24 w-auto drop-shadow-lg" 
                 src="/logo.png" 
               />
               <motion.div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
