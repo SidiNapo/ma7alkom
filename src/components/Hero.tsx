@@ -6,7 +6,7 @@ import { GetStartedButton } from "@/components/ui/get-started-button";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-28 md:pt-32">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 sm:pt-36 md:pt-40">
       {/* GLSL Hills Background */}
       <GLSLHills speed={0.3} cameraZ={130} />
       
@@ -25,7 +25,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-full px-6 py-3 mb-10"
+            className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-8 sm:mb-10"
           >
             <motion.span
               className="w-2.5 h-2.5 rounded-full bg-primary"
