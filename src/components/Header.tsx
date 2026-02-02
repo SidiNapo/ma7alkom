@@ -35,8 +35,8 @@ const Header = () => {
       transition={{ duration: 0.6, ease: "easeOut" }} 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? "bg-background/95 backdrop-blur-xl shadow-2xl border-b border-primary/20" 
-          : "bg-background/80 backdrop-blur-sm"
+            ? "bg-background/95 shadow-2xl border-b border-primary/20 md:backdrop-blur-xl" 
+            : "bg-background/90 md:backdrop-blur-sm"
       }`}
     >
       <div className="container mx-auto px-4 md:px-8">
@@ -117,7 +117,7 @@ const Header = () => {
         initial={false} 
         animate={{ height: isMenuOpen ? "auto" : 0, opacity: isMenuOpen ? 1 : 0 }} 
         transition={{ duration: 0.4, ease: "easeInOut" }} 
-        className="md:hidden overflow-hidden bg-background/98 backdrop-blur-xl border-b border-primary/20"
+        className="md:hidden overflow-hidden bg-background/98 border-b border-primary/20 shadow-2xl"
       >
         <nav className="container mx-auto px-4 py-8 flex flex-col gap-2">
           {navItems.map((item, index) => (
