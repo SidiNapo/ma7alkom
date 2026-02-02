@@ -22,7 +22,25 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    // 1) Reset scroll position (Safari may throw on invalid behavior values)
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+
+    // 2) Defensive: release any leftover scroll-lock styles on navigation
+    // (e.g. if a menu/dialog briefly locked body scroll on mobile)
+    const root = document.documentElement;
+    const body = document.body;
+
+    root.style.overflow = "";
+    root.style.position = "";
+
+    body.style.overflow = "";
+    body.style.position = "";
+    body.style.top = "";
+    body.style.width = "";
   }, [pathname]);
 
   return null;
