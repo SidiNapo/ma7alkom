@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Product } from "@/types/product";
+import { Product, FlavorSelection } from "@/types/product";
 import { cityPrices, CityPrice } from "@/data/cities";
 import { Check, Send, MapPin, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { GetStartedButton } from "@/components/ui/get-started-button";
+import FlavorSelector from "@/components/FlavorSelector";
 
 interface OrderFormProps {
   product: Product;
@@ -20,6 +21,10 @@ const OrderForm = ({ product }: OrderFormProps) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCity, setSelectedCity] = useState<CityPrice | null>(null);
+  const [flavorSelections, setFlavorSelections] = useState<FlavorSelection[]>([]);
+  const [totalFlavorQuantity, setTotalFlavorQuantity] = useState(0);
+
+  const hasFlavors = product.flavors && product.flavors.length > 0;
 
   const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const cityName = e.target.value;
@@ -28,10 +33,32 @@ const OrderForm = ({ product }: OrderFormProps) => {
     setSelectedCity(city || null);
   };
 
+  const handleFlavorChange = (selections: FlavorSelection[], total: number) => {
+    setFlavorSelections(selections);
+    setTotalFlavorQuantity(total);
+  };
+
+  const getQuantity = () => {
+    return hasFlavors ? totalFlavorQuantity : formData.quantity;
+  };
+
   const calculateTotal = () => {
-    const productTotal = product.price * formData.quantity;
+    const qty = getQuantity();
+    const productTotal = product.price * qty;
     const shipping = selectedCity?.price || 0;
     return productTotal + shipping;
+  };
+
+  const getFlavorSummary = () => {
+    if (!product.flavors) return "";
+    return flavorSelections
+      .filter(s => s.quantity > 0)
+      .map(s => {
+        const flavor = product.flavors?.find(f => f.id === s.flavorId);
+        return flavor ? `${flavor.emoji} ${flavor.name} x${s.quantity}` : "";
+      })
+      .filter(Boolean)
+      .join(", ");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,6 +66,11 @@ const OrderForm = ({ product }: OrderFormProps) => {
     
     if (!formData.name || !formData.phone || !formData.city || !formData.address) {
       toast.error("Veuillez remplir tous les champs");
+      return;
+    }
+
+    if (hasFlavors && totalFlavorQuantity === 0) {
+      toast.error("Veuillez sélectionner au moins une saveur");
       return;
     }
 
@@ -52,6 +84,8 @@ const OrderForm = ({ product }: OrderFormProps) => {
       ...formData,
       product: product.name,
       productPrice: product.price,
+      quantity: getQuantity(),
+      flavorSelections: hasFlavors ? getFlavorSummary() : undefined,
       shippingPrice: selectedCity?.price,
       total: calculateTotal(),
       deliveryTime: selectedCity?.delay,
@@ -69,8 +103,12 @@ const OrderForm = ({ product }: OrderFormProps) => {
       quantity: 1,
     });
     setSelectedCity(null);
+    setFlavorSelections([]);
+    setTotalFlavorQuantity(0);
     setIsSubmitting(false);
   };
+
+  const currentQuantity = getQuantity();
 
   return (
     <motion.div
@@ -144,38 +182,51 @@ const OrderForm = ({ product }: OrderFormProps) => {
             />
           </div>
 
-          {/* Quantity */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Quantité
-            </label>
-            <div className="flex items-center gap-4">
-              <button
-                type="button"
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    quantity: Math.max(1, formData.quantity - 1),
-                  })
-                }
-                className="w-12 h-12 rounded-xl bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center text-xl font-bold"
-              >
-                -
-              </button>
-              <span className="text-2xl font-display text-foreground w-16 text-center">
-                {formData.quantity}
-              </span>
-              <button
-                type="button"
-                onClick={() =>
-                  setFormData({ ...formData, quantity: formData.quantity + 1 })
-                }
-                className="w-12 h-12 rounded-xl bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center text-xl font-bold"
-              >
-                +
-              </button>
+          {/* Flavor Selector (for products with flavors) */}
+          {hasFlavors && product.flavors && (
+            <div className="border border-primary/30 rounded-2xl p-6 bg-primary/5">
+              <FlavorSelector 
+                flavors={product.flavors} 
+                onChange={handleFlavorChange}
+                unitName={product.unitName}
+              />
             </div>
-          </div>
+          )}
+
+          {/* Standard Quantity (for products without flavors) */}
+          {!hasFlavors && (
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Quantité
+              </label>
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData({
+                      ...formData,
+                      quantity: Math.max(1, formData.quantity - 1),
+                    })
+                  }
+                  className="w-12 h-12 rounded-xl bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center text-xl font-bold"
+                >
+                  -
+                </button>
+                <span className="text-2xl font-display text-foreground w-16 text-center">
+                  {formData.quantity}
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData({ ...formData, quantity: formData.quantity + 1 })
+                  }
+                  className="w-12 h-12 rounded-xl bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center text-xl font-bold"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Order Summary */}
           <div className="border-t border-border/50 pt-6 mt-8">
@@ -183,12 +234,20 @@ const OrderForm = ({ product }: OrderFormProps) => {
               Récapitulatif
             </h3>
             <div className="space-y-3">
+              {/* Flavor selections summary */}
+              {hasFlavors && flavorSelections.length > 0 && (
+                <div className="flex flex-col gap-1 text-sm">
+                  <span className="text-muted-foreground font-medium">Saveurs sélectionnées:</span>
+                  <span className="text-foreground">{getFlavorSummary()}</span>
+                </div>
+              )}
+              
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">
-                  {product.shortName} x{formData.quantity}
+                  {product.shortName} x{currentQuantity} {hasFlavors ? product.unitName || 'unité' : ''}
                 </span>
                 <span className="text-foreground">
-                  {product.price * formData.quantity} DH
+                  {product.price * currentQuantity} DH
                 </span>
               </div>
               

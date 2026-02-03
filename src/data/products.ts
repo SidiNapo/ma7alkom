@@ -35,9 +35,9 @@ Chaque fil dentaire élimine en douceur la plaque dentaire et les résidus alime
   {
     id: "spray-buccal",
     name: "Spray Buccal Rafraîchissant",
-    shortName: "Spray Buccal (6 Saveurs)",
-    price: 79,
-    originalPrice: 119,
+    shortName: "Spray Buccal",
+    price: 20,
+    originalPrice: 35,
     image: "/images/products/spray-buccal-1.jpg",
     gallery: [
       "/images/products/spray-buccal-1.jpg",
@@ -45,22 +45,32 @@ Chaque fil dentaire élimine en douceur la plaque dentaire et les résidus alime
     ],
     category: "Hygiène Buccale",
     badge: "Best-Seller",
-    description: "Profitez d'une haleine fraîche instantanée à tout moment de la journée grâce à ce lot de 6 sprays buccaux aux saveurs variées : Pêche, Raisin, Litchi, Menthe, Pastèque et Orange.",
-    fullDescription: `🌬️ Spray Buccal Rafraîchissant – Lot de 6 Pièces (6 Saveurs)
+    description: "Profitez d'une haleine fraîche instantanée à tout moment de la journée grâce à nos sprays buccaux aux saveurs variées. Choisissez vos parfums préférés !",
+    fullDescription: `🌬️ Spray Buccal Rafraîchissant – Choisissez Vos Saveurs
 
-Profitez d'une haleine fraîche instantanée à tout moment de la journée grâce à ce lot de 6 sprays buccaux aux saveurs variées : Pêche, Raisin, Litchi, Menthe, Pastèque et Orange.
+Profitez d'une haleine fraîche instantanée à tout moment de la journée grâce à nos sprays buccaux disponibles en 6 saveurs délicieuses : Pêche, Raisin, Litchi, Menthe, Pastèque et Orange.
 
 Formulés pour neutraliser efficacement les mauvaises odeurs, ces sprays buccaux offrent une sensation de fraîcheur immédiate tout en laissant un goût agréable et durable. Leur format compact et portable permet de les emporter facilement partout : sac à main, poche, bureau ou valise.
 
-🎁 Idéal comme cadeau de vacances ou pour un usage personnel, ce coffret est parfait pour rester confiant lors de rendez-vous, voyages, réunions ou sorties.`,
+🎁 Idéal comme cadeau de vacances ou pour un usage personnel, parfait pour rester confiant lors de rendez-vous, voyages, réunions ou sorties.`,
     benefits: [
       "Haleine fraîche instantanée",
-      "6 saveurs délicieuses pour varier le plaisir",
+      "6 saveurs au choix",
       "Format portable et discret",
       "Utilisation simple et rapide",
-      "Parfait pour le quotidien, les voyages et comme idée cadeau"
+      "Parfait pour le quotidien et les voyages"
     ],
-    emoji: "🌬️"
+    emoji: "🌬️",
+    isPerUnit: true,
+    unitName: "bouteille",
+    flavors: [
+      { id: "peche", name: "Pêche", emoji: "🍑", color: "hsl(20, 80%, 60%)" },
+      { id: "raisin", name: "Raisin", emoji: "🍇", color: "hsl(270, 60%, 50%)" },
+      { id: "litchi", name: "Litchi", emoji: "🌸", color: "hsl(340, 70%, 65%)" },
+      { id: "menthe", name: "Menthe", emoji: "🌿", color: "hsl(150, 60%, 45%)" },
+      { id: "pasteque", name: "Pastèque", emoji: "🍉", color: "hsl(0, 70%, 55%)" },
+      { id: "orange", name: "Orange", emoji: "🍊", color: "hsl(30, 90%, 55%)" }
+    ]
   },
   {
     id: "tondeuse-nez",

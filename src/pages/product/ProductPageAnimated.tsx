@@ -165,13 +165,20 @@ const ProductPageAnimated = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="mt-6 lg:mt-0 lg:absolute lg:-bottom-6 lg:-right-6 bg-gradient-to-br from-primary to-accent text-primary-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl shadow-xl text-center lg:text-left"
             >
-              <div className="flex items-baseline justify-center lg:justify-start gap-2">
-                <span className="text-2xl md:text-3xl font-display font-bold">
-                  {product.price} DH
-                </span>
-                {product.originalPrice && (
-                  <span className="text-base md:text-lg line-through opacity-70">
-                    {product.originalPrice} DH
+              <div className="flex flex-col items-center lg:items-start">
+                <div className="flex items-baseline justify-center lg:justify-start gap-2">
+                  <span className="text-2xl md:text-3xl font-display font-bold">
+                    {product.price} DH
+                  </span>
+                  {product.originalPrice && (
+                    <span className="text-base md:text-lg line-through opacity-70">
+                      {product.originalPrice} DH
+                    </span>
+                  )}
+                </div>
+                {product.isPerUnit && product.unitName && (
+                  <span className="text-xs md:text-sm opacity-90 mt-1">
+                    par {product.unitName}
                   </span>
                 )}
               </div>
