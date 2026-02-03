@@ -152,20 +152,22 @@ const ProductPageIOS = () => {
             )}
 
             {/* Price Badge - Compact and modern */}
-            <div className="mt-4 lg:mt-0 lg:absolute lg:-bottom-3 lg:-right-3 inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-lg">
-              <span className="text-base sm:text-lg font-display font-bold">
-                {product.price} DH
-              </span>
-              {product.originalPrice && (
-                <span className="text-[10px] sm:text-xs line-through opacity-60">
-                  {product.originalPrice} DH
+            <div className="mt-4 lg:mt-0 flex justify-center lg:block lg:absolute lg:-bottom-3 lg:-right-3">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-lg">
+                <span className="text-base sm:text-lg font-display font-bold">
+                  {product.price} DH
                 </span>
-              )}
-              {product.isPerUnit && product.unitName && (
-                <span className="text-[9px] sm:text-[10px] opacity-80 border-l border-primary-foreground/30 pl-1.5 sm:pl-2">
-                  /{product.unitName}
-                </span>
-              )}
+                {product.originalPrice && (
+                  <span className="text-[10px] sm:text-xs line-through opacity-60">
+                    {product.originalPrice} DH
+                  </span>
+                )}
+                {product.isPerUnit && product.unitName && (
+                  <span className="text-[9px] sm:text-[10px] opacity-80 border-l border-primary-foreground/30 pl-1.5 sm:pl-2">
+                    /{product.unitName}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
