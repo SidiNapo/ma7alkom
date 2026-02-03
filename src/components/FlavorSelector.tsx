@@ -37,18 +37,20 @@ const FlavorSelector = ({ flavors, onChange, unitName = "unité" }: FlavorSelect
   const totalSelected = Object.values(selections).reduce((sum, qty) => sum + qty, 0);
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="font-display text-lg text-foreground flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-primary" />
+    <div className="space-y-3">
+      {/* Header */}
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <h3 className="font-display text-base sm:text-lg text-foreground flex items-center gap-1.5">
+          <Sparkles className="w-4 h-4 text-primary" />
           Choisissez vos saveurs
         </h3>
-        <div className="text-sm text-muted-foreground">
-          {totalSelected} {unitName}{totalSelected > 1 ? 's' : ''} sélectionnée{totalSelected > 1 ? 's' : ''}
-        </div>
+        <span className="text-xs sm:text-sm text-primary font-medium px-2.5 py-1 bg-primary/10 rounded-full">
+          {totalSelected} {unitName}{totalSelected > 1 ? 's' : ''}
+        </span>
       </div>
       
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {/* Flavor Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
         {flavors.map((flavor) => {
           const qty = selections[flavor.id] || 0;
           const isSelected = qty > 0;
@@ -57,47 +59,47 @@ const FlavorSelector = ({ flavors, onChange, unitName = "unité" }: FlavorSelect
             <div
               key={flavor.id}
               className={`
-                relative rounded-2xl border-2 p-4 transition-all duration-300
+                relative rounded-xl border p-2.5 sm:p-3 transition-all duration-200
                 ${isSelected 
-                  ? 'border-primary bg-primary/10 shadow-gold' 
-                  : 'border-border/50 bg-secondary/50 hover:border-primary/50'
+                  ? 'border-primary bg-primary/10' 
+                  : 'border-border/40 bg-card/50 hover:border-primary/40'
                 }
               `}
             >
-              {/* Flavor badge */}
-              <div className="flex items-center gap-2 mb-3">
+              {/* Flavor info row */}
+              <div className="flex items-center gap-1.5 mb-2">
                 <span 
-                  className="text-2xl w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: `${flavor.color}20` }}
+                  className="text-lg sm:text-xl w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: `${flavor.color}15` }}
                 >
                   {flavor.emoji}
                 </span>
-                <span className="font-medium text-foreground text-sm">
+                <span className="font-medium text-foreground text-xs sm:text-sm truncate">
                   {flavor.name}
                 </span>
               </div>
               
               {/* Quantity controls */}
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between gap-1">
                 <button
                   type="button"
                   onClick={() => updateQuantity(flavor.id, -1)}
                   disabled={qty === 0}
                   className={`
-                    w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200
+                    w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-colors
                     ${qty > 0 
-                      ? 'bg-secondary hover:bg-destructive/20 text-foreground hover:text-destructive' 
-                      : 'bg-secondary/50 text-muted-foreground cursor-not-allowed'
+                      ? 'bg-secondary hover:bg-destructive/20 text-foreground' 
+                      : 'bg-secondary/30 text-muted-foreground/50 cursor-not-allowed'
                     }
                   `}
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus className="w-3.5 h-3.5" />
                 </button>
                 
                 <span 
                   className={`
-                    text-xl font-display min-w-[2rem] text-center transition-all duration-200
-                    ${isSelected ? 'text-primary' : 'text-muted-foreground'}
+                    text-base sm:text-lg font-display min-w-[1.5rem] text-center
+                    ${isSelected ? 'text-primary font-bold' : 'text-muted-foreground'}
                   `}
                 >
                   {qty}
@@ -106,17 +108,15 @@ const FlavorSelector = ({ flavors, onChange, unitName = "unité" }: FlavorSelect
                 <button
                   type="button"
                   onClick={() => updateQuantity(flavor.id, 1)}
-                  className="w-9 h-9 rounded-xl bg-primary/20 hover:bg-primary text-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-200"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary/20 hover:bg-primary text-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus className="w-3.5 h-3.5" />
                 </button>
               </div>
               
-              {/* Selection indicator */}
+              {/* Selection badge */}
               {isSelected && (
-                <div 
-                  className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shadow-lg"
-                >
+                <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center shadow-md">
                   {qty}
                 </div>
               )}
@@ -125,9 +125,10 @@ const FlavorSelector = ({ flavors, onChange, unitName = "unité" }: FlavorSelect
         })}
       </div>
       
+      {/* Empty state */}
       {totalSelected === 0 && (
-        <p className="text-center text-sm text-muted-foreground py-2">
-          Sélectionnez au moins une {unitName} pour continuer
+        <p className="text-center text-xs text-muted-foreground py-1">
+          Sélectionnez au moins une {unitName}
         </p>
       )}
     </div>
