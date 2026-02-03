@@ -151,25 +151,21 @@ const ProductPageIOS = () => {
               </div>
             )}
 
-            {/* Price Badge */}
-            <div className="mt-6 lg:mt-0 lg:absolute lg:-bottom-6 lg:-right-6 bg-gradient-to-br from-primary to-accent text-primary-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl shadow-xl text-center lg:text-left">
-              <div className="flex flex-col items-center lg:items-start">
-                <div className="flex items-baseline justify-center lg:justify-start gap-2">
-                  <span className="text-2xl md:text-3xl font-display font-bold">
-                    {product.price} DH
-                  </span>
-                  {product.originalPrice && (
-                    <span className="text-base md:text-lg line-through opacity-70">
-                      {product.originalPrice} DH
-                    </span>
-                  )}
-                </div>
-                {product.isPerUnit && product.unitName && (
-                  <span className="text-xs md:text-sm opacity-90 mt-1">
-                    par {product.unitName}
-                  </span>
-                )}
-              </div>
+            {/* Price Badge - Compact and modern */}
+            <div className="mt-4 lg:mt-0 lg:absolute lg:-bottom-3 lg:-right-3 inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-lg">
+              <span className="text-base sm:text-lg font-display font-bold">
+                {product.price} DH
+              </span>
+              {product.originalPrice && (
+                <span className="text-[10px] sm:text-xs line-through opacity-60">
+                  {product.originalPrice} DH
+                </span>
+              )}
+              {product.isPerUnit && product.unitName && (
+                <span className="text-[9px] sm:text-[10px] opacity-80 border-l border-primary-foreground/30 pl-1.5 sm:pl-2">
+                  /{product.unitName}
+                </span>
+              )}
             </div>
           </div>
 
