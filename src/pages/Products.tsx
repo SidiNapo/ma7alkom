@@ -3,7 +3,15 @@ import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
 import { Package, Truck, Shield, MessageSquare } from "lucide-react";
 import { GetStartedButton } from "@/components/ui/get-started-button";
+import SEOHead from "@/components/SEOHead";
+import { pageSEO, organizationSchema, generateBreadcrumbSchema } from "@/data/seoData";
+
 const Products = () => {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Accueil", url: "/" },
+    { name: "Produits", url: "/produits" },
+  ]);
+
   const features = [{
     icon: Package,
     title: "Produits Sélectionnés",
@@ -17,7 +25,15 @@ const Products = () => {
     title: "Paiement à la Livraison",
     description: "Sécurisé et pratique"
   }];
-  return <main className="min-h-screen">
+  return <>
+      <SEOHead
+        title={pageSEO.products.title}
+        description={pageSEO.products.description}
+        keywords={pageSEO.products.keywords}
+        canonical={pageSEO.products.canonical}
+        jsonLd={[organizationSchema, breadcrumbSchema]}
+      />
+      <main className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-32">
         {/* Background */}
@@ -211,6 +227,7 @@ const Products = () => {
           </motion.div>
         </div>
       </section>
-    </main>;
+    </main>
+  </>;
 };
 export default Products;

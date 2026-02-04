@@ -2,8 +2,14 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
 import { useRef } from "react";
 import { GetStartedButton } from "@/components/ui/get-started-button";
+import SEOHead from "@/components/SEOHead";
+import { pageSEO, organizationSchema, generateBreadcrumbSchema } from "@/data/seoData";
 
 const About = () => {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Accueil", url: "/" },
+    { name: "À Propos", url: "/a-propos" },
+  ]);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -12,7 +18,15 @@ const About = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   return (
-    <main className="min-h-screen">
+    <>
+      <SEOHead
+        title={pageSEO.about.title}
+        description={pageSEO.about.description}
+        keywords={pageSEO.about.keywords}
+        canonical={pageSEO.about.canonical}
+        jsonLd={[organizationSchema, breadcrumbSchema]}
+      />
+      <main className="min-h-screen">
       {/* Hero Section */}
       <section
         ref={heroRef}
@@ -524,6 +538,7 @@ const About = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 

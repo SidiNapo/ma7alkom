@@ -4,10 +4,20 @@ import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
 import { GetStartedButton } from "@/components/ui/get-started-button";
 import { ShoppingBag } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
+import { pageSEO, organizationSchema, websiteSchema, localBusinessSchema } from "@/data/seoData";
 
 const Index = () => {
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <>
+      <SEOHead
+        title={pageSEO.home.title}
+        description={pageSEO.home.description}
+        keywords={pageSEO.home.keywords}
+        canonical={pageSEO.home.canonical}
+        jsonLd={[organizationSchema, websiteSchema, localBusinessSchema]}
+      />
+      <main className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
       <Hero />
 
@@ -183,7 +193,8 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 };
 

@@ -15,6 +15,8 @@ import { getProductById, getRecommendedProducts } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import OrderForm from "@/components/OrderForm";
 import { GetStartedButton } from "@/components/ui/get-started-button";
+import SEOHead from "@/components/SEOHead";
+import { productSEO, organizationSchema, generateProductSchema, generateBreadcrumbSchema } from "@/data/seoData";
 
 const ProductPageAnimated = () => {
   const { id } = useParams<{ id: string }>();
@@ -50,8 +52,40 @@ const ProductPageAnimated = () => {
     setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
   };
 
+  const seo = productSEO[product.id] || {
+    title: `${product.name} - Achat en Ligne Maroc | Ma7alkom`,
+    description: product.description.slice(0, 155),
+    keywords: `${product.name.toLowerCase()}, ${product.category.toLowerCase()}, achat maroc`,
+  };
+
+  const productSchema = generateProductSchema({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    originalPrice: product.originalPrice,
+    image: product.image,
+    category: product.category,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Accueil", url: "/" },
+    { name: "Produits", url: "/produits" },
+    { name: product.name, url: `/produit/${product.id}` },
+  ]);
+
   return (
-    <main className="min-h-screen pt-32 pb-16">
+    <>
+      <SEOHead
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
+        canonical={`/produit/${product.id}`}
+        ogImage={product.image}
+        ogType="product"
+        jsonLd={[organizationSchema, productSchema, breadcrumbSchema]}
+      />
+      <main className="min-h-screen pt-32 pb-16">
       <div className="container mx-auto px-4 md:px-8">
         {/* Back Button */}
         <motion.div
@@ -356,6 +390,7 @@ const ProductPageAnimated = () => {
         </motion.section>
       </div>
     </main>
+    </>
   );
 };
 
