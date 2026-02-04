@@ -3,8 +3,14 @@ import { MapPin, Phone, Mail, Send, Clock, MessageSquare } from "lucide-react";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { GetStartedButton } from "@/components/ui/get-started-button";
+import SEOHead from "@/components/SEOHead";
+import { pageSEO, organizationSchema, localBusinessSchema, generateBreadcrumbSchema } from "@/data/seoData";
 
 const Contact = () => {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Accueil", url: "/" },
+    { name: "Contact", url: "/contact" },
+  ]);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -32,7 +38,15 @@ const Contact = () => {
   };
 
   return (
-    <main className="min-h-screen">
+    <>
+      <SEOHead
+        title={pageSEO.contact.title}
+        description={pageSEO.contact.description}
+        keywords={pageSEO.contact.keywords}
+        canonical={pageSEO.contact.canonical}
+        jsonLd={[organizationSchema, localBusinessSchema, breadcrumbSchema]}
+      />
+      <main className="min-h-screen">
       {/* Hero Section */}
       <section
         ref={heroRef}
@@ -362,6 +376,7 @@ const Contact = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 
