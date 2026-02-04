@@ -1,184 +1,186 @@
 
-# Plan: Fix Mobile Scroll Lock & Enlarge Mobile Logo
+# Plan: Complete SEO Optimization for Ma7alkom.com
 
 ## Overview
-This plan addresses two critical issues:
-1. **Scroll gets locked** on all 4 product pages after the first scroll on mobile devices
-2. **Logo too small** in the mobile navigation bar
+Transform ma7alkom.com into a highly search-engine-optimized e-commerce site targeting Moroccan customers. This plan implements comprehensive SEO best practices including dynamic meta tags, structured data (JSON-LD), XML sitemap, enhanced robots.txt, and page-specific optimizations.
 
 ---
 
-## Root Cause Analysis
+## What Will Be Built
 
-### Scroll Lock Issue
-After thorough investigation, I identified several potential causes:
+### 1. SEO Head Component with Dynamic Meta Tags
+A reusable component that dynamically updates `<title>`, `<meta description>`, Open Graph, Twitter Cards, and canonical URLs for each page.
 
-1. **`touch-action` conflicts**: The `touch-pan-y` class on ProductPage containers may conflict with browser default touch handling
-2. **iOS Safari quirks**: The combination of `overflow-x: hidden` on both `html` and `body` can cause scroll issues on iOS
-3. **Nested overflow containers**: Multiple elements with `overflow-hidden` may create scroll traps
-4. **Framer Motion touch capture**: `whileTap` and animation handlers on buttons/elements might be capturing touch events
+**Pages and their SEO content:**
 
-### Logo Size Issue
-Current logo classes: `h-14 sm:h-16 md:h-20` - the `h-14` (56px) is too small on mobile screens.
+| Page | Title | Focus Keywords |
+|------|-------|----------------|
+| Home | Ma7alkom - Boutique en Ligne N1 au Maroc, Livraison Rapide | boutique en ligne maroc, livraison maroc |
+| Products | Nos Produits - Ma7alkom, Hygiène & Soins au Maroc | produits hygiene maroc, soins personnels |
+| Fil Dentaire | Fil Dentaire Jetable 50 Pcs - Achat en Ligne Maroc | fil dentaire maroc, hygiène buccale |
+| Spray Buccal | Spray Buccal Rafraîchissant - 6 Saveurs, Livraison Maroc | spray haleine maroc, haleine fraiche |
+| Tondeuse | Tondeuse Nez Oreilles Sans Fil - Ma7alkom Maroc | tondeuse nez maroc, soins homme |
+| Protege-Bruleurs | Protège-Brûleurs Gaz 20 Pcs - Accessoire Cuisine Maroc | protege bruleur maroc, accessoire cuisine |
+| Contact | Contact Ma7alkom - Service Client Maroc | contact boutique maroc |
+| About | À Propos de Ma7alkom - Votre Boutique de Confiance | boutique confiance maroc |
+
+### 2. JSON-LD Structured Data
+Rich snippets for Google to display enhanced search results:
+
+- **Organization schema** on all pages (brand info, logo, contact)
+- **WebSite schema** with SearchAction (homepage)
+- **Product schema** on each product page (name, price, availability, reviews)
+- **BreadcrumbList** for navigation context
+- **LocalBusiness** schema (Casablanca location)
+
+### 3. XML Sitemap
+Static sitemap.xml with all pages for Google/Bing indexing:
+
+```text
+public/sitemap.xml
+```
+
+**Included URLs:**
+- https://ma7alkom.com/
+- https://ma7alkom.com/produits
+- https://ma7alkom.com/produit/fil-dentaire
+- https://ma7alkom.com/produit/spray-buccal
+- https://ma7alkom.com/produit/tondeuse-nez
+- https://ma7alkom.com/produit/protege-bruleurs
+- https://ma7alkom.com/a-propos
+- https://ma7alkom.com/contact
+
+### 4. Enhanced robots.txt
+Add sitemap reference and optimize crawler directives:
+
+```text
+Sitemap: https://ma7alkom.com/sitemap.xml
+```
+
+### 5. Updated index.html
+- Add canonical URL meta tag
+- Add geo and language targeting for Morocco
+- Add theme-color for mobile browsers
+- Add proper favicon with multiple sizes
+- Add alternate hreflang tags
+
+### 6. Product Data SEO Enhancement
+Extend product data with SEO-specific fields:
+- `seoTitle`: Optimized page title
+- `seoDescription`: 155-character meta description
+- `seoKeywords`: Targeted keywords array
 
 ---
 
-## Implementation Plan
+## Files to Create/Modify
 
-### Task 1: Fix Global Mobile Scroll Handling
+| File | Action | Purpose |
+|------|--------|---------|
+| `src/components/SEOHead.tsx` | Create | Dynamic meta tags component |
+| `src/data/seoData.ts` | Create | Centralized SEO content for all pages |
+| `public/sitemap.xml` | Create | XML sitemap for search engines |
+| `public/robots.txt` | Modify | Add sitemap reference |
+| `index.html` | Modify | Enhanced base SEO tags |
+| `src/pages/Index.tsx` | Modify | Add SEOHead component |
+| `src/pages/Products.tsx` | Modify | Add SEOHead component |
+| `src/pages/product/ProductPageAnimated.tsx` | Modify | Add product-specific SEOHead |
+| `src/pages/product/ProductPageIOS.tsx` | Modify | Add product-specific SEOHead |
+| `src/pages/Contact.tsx` | Modify | Add SEOHead component |
+| `src/pages/About.tsx` | Modify | Add SEOHead component |
+| `src/data/products.ts` | Modify | Add SEO fields to products |
 
-**File: `src/index.css`**
+---
 
-Update the base styles to ensure proper mobile scrolling:
+## Technical Details
 
-- Remove `overflow-x: hidden` from `html` (keep only on `body`)
-- Add `overscroll-behavior: none` to prevent scroll chaining issues
-- Add `-webkit-overflow-scrolling: touch` for iOS momentum scrolling
-- Add `touch-action: manipulation` to the body to allow scrolling while preventing double-tap zoom
+### SEOHead Component Structure
 
-Changes:
-```css
-html {
-  /* Remove overflow-x: hidden from html - keep only on body */
+```tsx
+// src/components/SEOHead.tsx
+interface SEOHeadProps {
+  title: string;
+  description: string;
+  keywords?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'product';
+  jsonLd?: object | object[];
 }
-
-body {
-  @apply bg-background text-foreground;
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: none;
-  touch-action: manipulation;
-}
 ```
 
----
+Uses `document.head` manipulation via `useEffect` to dynamically update:
+- `<title>` tag
+- `<meta name="description">`
+- `<meta name="keywords">`
+- `<link rel="canonical">`
+- Open Graph meta tags
+- Twitter Card meta tags
+- JSON-LD script injection
 
-### Task 2: Remove Conflicting Touch Classes from ProductPage
+### Product JSON-LD Schema Example
 
-**File: `src/pages/ProductPage.tsx`**
-
-Remove the `touch-pan-y` classes that may be conflicting with natural scrolling:
-
-- Remove `touch-pan-y` from the `<main>` element
-- Remove `touch-pan-y` from the container `<div>`
-- These were added in a previous fix attempt but may be causing the issue
-
-Changes:
-```tsx
-// Before:
-<main className="min-h-screen pt-32 pb-16 touch-pan-y">
-  <div className="container mx-auto px-4 md:px-8 touch-pan-y">
-
-// After:
-<main className="min-h-screen pt-32 pb-16">
-  <div className="container mx-auto px-4 md:px-8">
-```
-
----
-
-### Task 3: Ensure GLSLHills Doesn't Block Touch
-
-**File: `src/components/ui/glsl-hills.tsx`**
-
-Already has `pointer-events-none` (verified), but add explicit `touch-action: none` for extra safety:
-
-```tsx
-<div 
-  className="absolute inset-0 overflow-hidden pointer-events-none"
-  style={{ width, height, touchAction: 'none' }}
->
-```
-
----
-
-### Task 4: Add Scroll Reset Safety on Route Change
-
-**File: `src/App.tsx`**
-
-Enhance the `ScrollToTop` component to also reset any stuck touch states:
-
-```tsx
-useEffect(() => {
-  // Reset scroll position
-  try {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  } catch {
-    window.scrollTo(0, 0);
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Fil Dentaire Jetable Portable",
+  "description": "Lot de 50 fils dentaires...",
+  "image": "https://ma7alkom.com/images/products/fil-dentaire-1.jpg",
+  "brand": {
+    "@type": "Brand",
+    "name": "Ma7alkom"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "49",
+    "priceCurrency": "MAD",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Ma7alkom"
+    }
   }
-
-  // Clear any stuck scroll-lock styles
-  const root = document.documentElement;
-  const body = document.body;
-
-  root.style.overflow = "";
-  root.style.position = "";
-  root.style.touchAction = "";
-
-  body.style.overflow = "";
-  body.style.position = "";
-  body.style.top = "";
-  body.style.width = "";
-  body.style.touchAction = "";
-}, [pathname]);
+}
 ```
+
+### Sitemap Priority Structure
+
+| URL Pattern | Priority | Change Frequency |
+|-------------|----------|------------------|
+| Homepage | 1.0 | weekly |
+| Product pages | 0.9 | weekly |
+| Products listing | 0.8 | weekly |
+| About | 0.6 | monthly |
+| Contact | 0.5 | monthly |
 
 ---
 
-### Task 5: Enlarge Mobile Logo
+## SEO Keywords Strategy (Morocco-Focused)
 
-**File: `src/components/Header.tsx`**
+**Primary Keywords:**
+- boutique en ligne maroc
+- achat en ligne maroc
+- livraison rapide maroc
+- paiement a la livraison maroc
 
-Increase the logo size on mobile from `h-14` to `h-16` or `h-18`:
+**Product-Specific Keywords:**
+- fil dentaire maroc / fil dentaire jetable
+- spray buccal maroc / spray haleine fraiche
+- tondeuse nez oreilles maroc
+- protege bruleur cuisiniere / accessoire cuisine maroc
 
-```tsx
-// Before:
-<motion.img 
-  alt="Ma7alkom" 
-  className="h-14 sm:h-16 md:h-20 w-auto drop-shadow-lg" 
-  src="/logo.png" 
-/>
-
-// After:
-<motion.img 
-  alt="Ma7alkom" 
-  className="h-16 sm:h-18 md:h-20 lg:h-24 w-auto drop-shadow-lg" 
-  src="/logo.png" 
-/>
-```
-
-Also increase the header height to accommodate the larger logo:
-
-```tsx
-// Before:
-<div className="flex items-center justify-between h-20 md:h-24">
-
-// After:
-<div className="flex items-center justify-between h-20 sm:h-22 md:h-24">
-```
+**Long-tail Keywords (in descriptions):**
+- acheter fil dentaire en ligne au maroc
+- spray buccal livraison casablanca
+- tondeuse pour homme maroc prix
 
 ---
 
-## Summary of File Changes
+## Expected Results
 
-| File | Change |
-|------|--------|
-| `src/index.css` | Fix global scroll styles for mobile |
-| `src/pages/ProductPage.tsx` | Remove conflicting `touch-pan-y` classes |
-| `src/components/ui/glsl-hills.tsx` | Add explicit `touchAction: 'none'` |
-| `src/App.tsx` | Reset touchAction on route changes |
-| `src/components/Header.tsx` | Enlarge logo on mobile |
-
----
-
-## Testing Checklist
-
-After implementation, verify:
-- [ ] All 4 product pages scroll smoothly on mobile (iOS Safari, Android Chrome)
-- [ ] Scrolling works immediately after page load
-- [ ] Scrolling works after navigating from another page
-- [ ] Scrolling works after opening/closing the mobile menu
-- [ ] Logo is prominently visible on mobile devices
-- [ ] Header spacing looks clean and not cramped
-- [ ] 3D background doesn't interfere with scrolling
-- [ ] WhatsApp button doesn't block scrolling
+1. **Improved Indexability**: All pages discoverable via sitemap
+2. **Rich Snippets**: Product prices and availability in Google results
+3. **Better CTR**: Compelling meta descriptions in SERPs
+4. **Local SEO**: Morocco-focused targeting with geo tags
+5. **Social Sharing**: Proper Open Graph for Facebook/Instagram/WhatsApp shares
+6. **Brand Authority**: Organization schema establishes credibility
