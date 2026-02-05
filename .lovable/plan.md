@@ -1,74 +1,54 @@
 
-# Plan: Complete SEO Optimization for Ma7alkom.com
+# Plan: Secure Email Sending via Resend for Orders & Contact Form
 
 ## Overview
-Transform ma7alkom.com into a highly search-engine-optimized e-commerce site targeting Moroccan customers. This plan implements comprehensive SEO best practices including dynamic meta tags, structured data (JSON-LD), XML sitemap, enhanced robots.txt, and page-specific optimizations.
+Implement a secure backend email notification system using Resend via Supabase Edge Functions. When customers place orders or submit contact messages, the admin will receive detailed, professionally formatted emails.
+
+---
+
+## Prerequisites
+
+Before implementing, you'll need a **Resend API key**:
+1. Sign up at https://resend.com (free tier allows 100 emails/day)
+2. For production, verify your domain at https://resend.com/domains
+3. Create an API key at https://resend.com/api-keys
+
+I'll ask you for this key during implementation.
 
 ---
 
 ## What Will Be Built
 
-### 1. SEO Head Component with Dynamic Meta Tags
-A reusable component that dynamically updates `<title>`, `<meta description>`, Open Graph, Twitter Cards, and canonical URLs for each page.
+### 1. Edge Function: Send Order Notification
+Receives order data and sends a beautifully formatted email to the admin with all order details.
 
-**Pages and their SEO content:**
+**Email Content:**
+| Field | Description |
+|-------|-------------|
+| Customer Name | From form input |
+| Phone Number | For follow-up |
+| Delivery Address | Full address with city |
+| Product Details | Name, quantity, price per unit |
+| Flavor Selections | (if applicable) Formatted list |
+| Shipping Cost | Based on city |
+| Delivery Time | Estimated delay |
+| Total Amount | Final price in DH |
+| Order Timestamp | When order was placed |
 
-| Page | Title | Focus Keywords |
-|------|-------|----------------|
-| Home | Ma7alkom - Boutique en Ligne N1 au Maroc, Livraison Rapide | boutique en ligne maroc, livraison maroc |
-| Products | Nos Produits - Ma7alkom, Hygiène & Soins au Maroc | produits hygiene maroc, soins personnels |
-| Fil Dentaire | Fil Dentaire Jetable 50 Pcs - Achat en Ligne Maroc | fil dentaire maroc, hygiène buccale |
-| Spray Buccal | Spray Buccal Rafraîchissant - 6 Saveurs, Livraison Maroc | spray haleine maroc, haleine fraiche |
-| Tondeuse | Tondeuse Nez Oreilles Sans Fil - Ma7alkom Maroc | tondeuse nez maroc, soins homme |
-| Protege-Bruleurs | Protège-Brûleurs Gaz 20 Pcs - Accessoire Cuisine Maroc | protege bruleur maroc, accessoire cuisine |
-| Contact | Contact Ma7alkom - Service Client Maroc | contact boutique maroc |
-| About | À Propos de Ma7alkom - Votre Boutique de Confiance | boutique confiance maroc |
+### 2. Edge Function: Send Contact Message
+Receives contact form data and forwards it to the admin email.
 
-### 2. JSON-LD Structured Data
-Rich snippets for Google to display enhanced search results:
+**Email Content:**
+| Field | Description |
+|-------|-------------|
+| Sender Name | Customer's name |
+| Email | For reply |
+| Phone | Optional |
+| Message | Full message content |
+| Timestamp | When message was sent |
 
-- **Organization schema** on all pages (brand info, logo, contact)
-- **WebSite schema** with SearchAction (homepage)
-- **Product schema** on each product page (name, price, availability, reviews)
-- **BreadcrumbList** for navigation context
-- **LocalBusiness** schema (Casablanca location)
-
-### 3. XML Sitemap
-Static sitemap.xml with all pages for Google/Bing indexing:
-
-```text
-public/sitemap.xml
-```
-
-**Included URLs:**
-- https://ma7alkom.com/
-- https://ma7alkom.com/produits
-- https://ma7alkom.com/produit/fil-dentaire
-- https://ma7alkom.com/produit/spray-buccal
-- https://ma7alkom.com/produit/tondeuse-nez
-- https://ma7alkom.com/produit/protege-bruleurs
-- https://ma7alkom.com/a-propos
-- https://ma7alkom.com/contact
-
-### 4. Enhanced robots.txt
-Add sitemap reference and optimize crawler directives:
-
-```text
-Sitemap: https://ma7alkom.com/sitemap.xml
-```
-
-### 5. Updated index.html
-- Add canonical URL meta tag
-- Add geo and language targeting for Morocco
-- Add theme-color for mobile browsers
-- Add proper favicon with multiple sizes
-- Add alternate hreflang tags
-
-### 6. Product Data SEO Enhancement
-Extend product data with SEO-specific fields:
-- `seoTitle`: Optimized page title
-- `seoDescription`: 155-character meta description
-- `seoKeywords`: Targeted keywords array
+### 3. Frontend Integration
+Update both forms to call the edge functions instead of just logging to console.
 
 ---
 
@@ -76,111 +56,123 @@ Extend product data with SEO-specific fields:
 
 | File | Action | Purpose |
 |------|--------|---------|
-| `src/components/SEOHead.tsx` | Create | Dynamic meta tags component |
-| `src/data/seoData.ts` | Create | Centralized SEO content for all pages |
-| `public/sitemap.xml` | Create | XML sitemap for search engines |
-| `public/robots.txt` | Modify | Add sitemap reference |
-| `index.html` | Modify | Enhanced base SEO tags |
-| `src/pages/Index.tsx` | Modify | Add SEOHead component |
-| `src/pages/Products.tsx` | Modify | Add SEOHead component |
-| `src/pages/product/ProductPageAnimated.tsx` | Modify | Add product-specific SEOHead |
-| `src/pages/product/ProductPageIOS.tsx` | Modify | Add product-specific SEOHead |
-| `src/pages/Contact.tsx` | Modify | Add SEOHead component |
-| `src/pages/About.tsx` | Modify | Add SEOHead component |
-| `src/data/products.ts` | Modify | Add SEO fields to products |
+| `supabase/config.toml` | Create | Edge function configuration |
+| `supabase/functions/send-order-email/index.ts` | Create | Order notification function |
+| `supabase/functions/send-contact-email/index.ts` | Create | Contact form function |
+| `src/components/OrderForm.tsx` | Modify | Call order edge function |
+| `src/pages/Contact.tsx` | Modify | Call contact edge function |
+| `src/integrations/supabase/client.ts` | Create | Supabase client for function calls |
 
 ---
 
-## Technical Details
+## Technical Architecture
 
-### SEOHead Component Structure
+```text
++----------------+     POST      +------------------------+     Resend API     +-------------+
+|  Order Form    | ------------> | send-order-email       | -----------------> | Admin Email |
+|  (Frontend)    |               | (Edge Function)        |                    |             |
++----------------+               +------------------------+                    +-------------+
 
-```tsx
-// src/components/SEOHead.tsx
-interface SEOHeadProps {
-  title: string;
-  description: string;
-  keywords?: string;
-  canonical?: string;
-  ogImage?: string;
-  ogType?: 'website' | 'product';
-  jsonLd?: object | object[];
-}
++----------------+     POST      +------------------------+     Resend API     +-------------+
+|  Contact Form  | ------------> | send-contact-email     | -----------------> | Admin Email |
+|  (Frontend)    |               | (Edge Function)        |                    |             |
++----------------+               +------------------------+                    +-------------+
 ```
 
-Uses `document.head` manipulation via `useEffect` to dynamically update:
-- `<title>` tag
-- `<meta name="description">`
-- `<meta name="keywords">`
-- `<link rel="canonical">`
-- Open Graph meta tags
-- Twitter Card meta tags
-- JSON-LD script injection
+---
 
-### Product JSON-LD Schema Example
+## Edge Function: send-order-email
 
+**Endpoint:** `/functions/v1/send-order-email`
+
+**Request Body:**
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "Fil Dentaire Jetable Portable",
-  "description": "Lot de 50 fils dentaires...",
-  "image": "https://ma7alkom.com/images/products/fil-dentaire-1.jpg",
-  "brand": {
-    "@type": "Brand",
-    "name": "Ma7alkom"
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "49",
-    "priceCurrency": "MAD",
-    "availability": "https://schema.org/InStock",
-    "seller": {
-      "@type": "Organization",
-      "name": "Ma7alkom"
-    }
-  }
+  "customerName": "Mohammed Alami",
+  "phone": "0612345678",
+  "city": "Casablanca",
+  "address": "123 Rue Mohammed V",
+  "productName": "Spray Buccal Rafraîchissant",
+  "productPrice": 20,
+  "quantity": 4,
+  "flavorSelections": "🍑 Pêche x2, 🌿 Menthe x2",
+  "shippingPrice": 35,
+  "deliveryTime": "24-48h",
+  "total": 115
 }
 ```
 
-### Sitemap Priority Structure
-
-| URL Pattern | Priority | Change Frequency |
-|-------------|----------|------------------|
-| Homepage | 1.0 | weekly |
-| Product pages | 0.9 | weekly |
-| Products listing | 0.8 | weekly |
-| About | 0.6 | monthly |
-| Contact | 0.5 | monthly |
+**Email Template Features:**
+- Professional HTML styling with Ma7alkom branding
+- Clear sections for customer info, order details, and totals
+- Mobile-responsive design
+- Order reference number (timestamp-based)
 
 ---
 
-## SEO Keywords Strategy (Morocco-Focused)
+## Edge Function: send-contact-email
 
-**Primary Keywords:**
-- boutique en ligne maroc
-- achat en ligne maroc
-- livraison rapide maroc
-- paiement a la livraison maroc
+**Endpoint:** `/functions/v1/send-contact-email`
 
-**Product-Specific Keywords:**
-- fil dentaire maroc / fil dentaire jetable
-- spray buccal maroc / spray haleine fraiche
-- tondeuse nez oreilles maroc
-- protege bruleur cuisiniere / accessoire cuisine maroc
+**Request Body:**
+```json
+{
+  "name": "Fatima Benali",
+  "email": "fatima@example.com",
+  "phone": "0698765432",
+  "message": "Je souhaite en savoir plus sur vos produits..."
+}
+```
 
-**Long-tail Keywords (in descriptions):**
-- acheter fil dentaire en ligne au maroc
-- spray buccal livraison casablanca
-- tondeuse pour homme maroc prix
+---
+
+## Security Measures
+
+1. **Server-side only**: API key stored as secret, never exposed to frontend
+2. **Input validation**: All fields validated and sanitized before processing
+3. **CORS headers**: Proper configuration for browser requests
+4. **Rate limiting**: Resend handles rate limiting automatically
+5. **Error handling**: Graceful error responses without exposing internals
+
+---
+
+## Input Validation
+
+Both edge functions will validate:
+- Required fields are present and non-empty
+- Phone numbers contain only valid characters
+- Email format is valid (contact form)
+- Numeric fields are actually numbers
+- Text fields have reasonable length limits
+
+---
+
+## Frontend Changes
+
+### OrderForm.tsx Updates
+- Replace `console.log` with actual API call
+- Add proper error handling with user-friendly messages
+- Show success/error states appropriately
+
+### Contact.tsx Updates  
+- Replace simulated submission with real API call
+- Add loading states and error handling
+- Validate email format before submission
+
+---
+
+## Email Recipient
+
+The admin email will be set to: **contact@ma7alkom.ma** (can be changed in edge function)
+
+Using Resend's default sender: `onboarding@resend.dev` (works immediately, no domain verification needed for testing)
 
 ---
 
 ## Expected Results
 
-1. **Improved Indexability**: All pages discoverable via sitemap
-2. **Rich Snippets**: Product prices and availability in Google results
-3. **Better CTR**: Compelling meta descriptions in SERPs
-4. **Local SEO**: Morocco-focused targeting with geo tags
-5. **Social Sharing**: Proper Open Graph for Facebook/Instagram/WhatsApp shares
-6. **Brand Authority**: Organization schema establishes credibility
+1. **Instant Notifications**: Admin receives email within seconds of form submission
+2. **Complete Information**: All order/contact details in one email
+3. **Professional Appearance**: Branded, well-formatted emails
+4. **Reliability**: Resend handles delivery with high success rate
+5. **Traceability**: Timestamp and reference numbers for tracking
