@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { GetStartedButton } from "@/components/ui/get-started-button";
 import FlavorSelector from "@/components/FlavorSelector";
  import { supabase } from "@/integrations/supabase/client";
+ import OrderSuccessModal from "@/components/OrderSuccessModal";
 
 interface OrderFormProps {
   product: Product;
@@ -24,6 +25,12 @@ const OrderForm = ({ product }: OrderFormProps) => {
   const [selectedCity, setSelectedCity] = useState<CityPrice | null>(null);
   const [flavorSelections, setFlavorSelections] = useState<FlavorSelection[]>([]);
   const [totalFlavorQuantity, setTotalFlavorQuantity] = useState(0);
+   const [successModalOpen, setSuccessModalOpen] = useState(false);
+   const [orderSuccess, setOrderSuccess] = useState<{
+     orderRef: string;
+     customerName: string;
+     total: number;
+   } | null>(null);
 
   const hasFlavors = product.flavors && product.flavors.length > 0;
 
@@ -103,7 +110,14 @@ const OrderForm = ({ product }: OrderFormProps) => {
        }
  
        console.log("Order sent successfully:", data);
-       toast.success(`Commande envoyée avec succès! Réf: ${data.orderRef}. Nous vous contacterons bientôt.`);
+       
+       // Store success data for modal
+       setOrderSuccess({
+         orderRef: data.orderRef,
+         customerName: formData.name.trim(),
+         total: calculateTotal(),
+       });
+       setSuccessModalOpen(true);
        
        setFormData({
          name: "",
@@ -126,11 +140,21 @@ const OrderForm = ({ product }: OrderFormProps) => {
   const currentQuantity = getQuantity();
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="max-w-2xl mx-auto"
-    >
+     <>
+       <OrderSuccessModal
+         isOpen={successModalOpen}
+         onClose={() => setSuccessModalOpen(false)}
+         customerName={orderSuccess?.customerName || ""}
+         orderRef={orderSuccess?.orderRef || ""}
+         productName={product.name}
+         total={orderSuccess?.total || 0}
+       />
+       
+       <motion.div
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         className="max-w-2xl mx-auto"
+       >
       <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-8 md:p-10">
         <div className="space-y-6">
           {/* Name */}
@@ -315,7 +339,8 @@ const OrderForm = ({ product }: OrderFormProps) => {
           </p>
         </div>
       </form>
-    </motion.div>
+       </motion.div>
+     </>
   );
 };
 
