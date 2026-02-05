@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { GetStartedButton } from "@/components/ui/get-started-button";
 import SEOHead from "@/components/SEOHead";
 import { pageSEO, organizationSchema, localBusinessSchema, generateBreadcrumbSchema } from "@/data/seoData";
+ import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -28,13 +29,46 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+     
+     // Client-side validation
+     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+       toast.error("Veuillez remplir tous les champs obligatoires");
+       return;
+     }
+ 
+     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+     if (!emailRegex.test(formData.email)) {
+       toast.error("Veuillez entrer une adresse email valide");
+       return;
+     }
+ 
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+     try {
+       const { data, error } = await supabase.functions.invoke("send-contact-email", {
+         body: {
+           name: formData.name.trim(),
+           email: formData.email.trim(),
+           phone: formData.phone.trim() || undefined,
+           message: formData.message.trim(),
+         },
+       });
 
-    toast.success("Message envoyé avec succès! Nous vous répondrons bientôt.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
-    setIsSubmitting(false);
+       if (error) {
+         console.error("Error sending contact message:", error);
+         toast.error("Une erreur s'est produite. Veuillez réessayer.");
+         return;
+       }
+ 
+       console.log("Contact message sent:", data);
+       toast.success("Message envoyé avec succès! Nous vous répondrons bientôt.");
+       setFormData({ name: "", email: "", phone: "", message: "" });
+     } catch (err) {
+       console.error("Unexpected error:", err);
+       toast.error("Une erreur s'est produite. Veuillez réessayer.");
+     } finally {
+       setIsSubmitting(false);
+     }
   };
 
   return (
