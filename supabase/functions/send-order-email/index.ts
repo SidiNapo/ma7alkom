@@ -176,7 +176,7 @@
  
      const emailResponse = await resend.emails.send({
        from: "Ma7alkom <onboarding@resend.dev>",
-       to: ["contact@ma7alkom.ma"],
+       to: ["contact@ma7alkom.com"],
        subject: `🛒 Nouvelle Commande ${orderRef} - ${sanitize(body.productName)}`,
        html: emailHtml,
      });

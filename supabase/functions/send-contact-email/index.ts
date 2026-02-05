@@ -146,7 +146,7 @@
  
      const emailResponse = await resend.emails.send({
        from: "Ma7alkom Contact <onboarding@resend.dev>",
-       to: ["contact@ma7alkom.ma"],
+       to: ["contact@ma7alkom.com"],
        replyTo: body.email,
        subject: `💬 Nouveau message de ${sanitize(body.name)} - ${messageRef}`,
        html: emailHtml,
