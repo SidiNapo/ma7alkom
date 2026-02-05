@@ -6,6 +6,7 @@ import { Check, Send, MapPin, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { GetStartedButton } from "@/components/ui/get-started-button";
 import FlavorSelector from "@/components/FlavorSelector";
+ import { supabase } from "@/integrations/supabase/client";
 
 interface OrderFormProps {
   product: Product;
@@ -76,36 +77,50 @@ const OrderForm = ({ product }: OrderFormProps) => {
 
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Here you would send to admin email
-    const orderDetails = {
-      ...formData,
-      product: product.name,
-      productPrice: product.price,
-      quantity: getQuantity(),
-      flavorSelections: hasFlavors ? getFlavorSummary() : undefined,
-      shippingPrice: selectedCity?.price,
-      total: calculateTotal(),
-      deliveryTime: selectedCity?.delay,
-    };
-
-    console.log("Order submitted:", orderDetails);
-    
-    toast.success("Commande envoyée avec succès! Nous vous contacterons bientôt.");
-    
-    setFormData({
-      name: "",
-      phone: "",
-      city: "",
-      address: "",
-      quantity: 1,
-    });
-    setSelectedCity(null);
-    setFlavorSelections([]);
-    setTotalFlavorQuantity(0);
-    setIsSubmitting(false);
+     try {
+       const orderData = {
+         customerName: formData.name.trim(),
+         phone: formData.phone.trim(),
+         city: formData.city,
+         address: formData.address.trim(),
+         productName: product.name,
+         productPrice: product.price,
+         quantity: getQuantity(),
+         flavorSelections: hasFlavors ? getFlavorSummary() : undefined,
+         shippingPrice: selectedCity?.price || 0,
+         deliveryTime: selectedCity?.delay || "À confirmer",
+         total: calculateTotal(),
+       };
+ 
+       const { data, error } = await supabase.functions.invoke("send-order-email", {
+         body: orderData,
+       });
+ 
+       if (error) {
+         console.error("Error sending order:", error);
+         toast.error("Une erreur s'est produite. Veuillez réessayer ou nous contacter par téléphone.");
+         return;
+       }
+ 
+       console.log("Order sent successfully:", data);
+       toast.success(`Commande envoyée avec succès! Réf: ${data.orderRef}. Nous vous contacterons bientôt.`);
+       
+       setFormData({
+         name: "",
+         phone: "",
+         city: "",
+         address: "",
+         quantity: 1,
+       });
+       setSelectedCity(null);
+       setFlavorSelections([]);
+       setTotalFlavorQuantity(0);
+     } catch (err) {
+       console.error("Unexpected error:", err);
+       toast.error("Une erreur s'est produite. Veuillez réessayer.");
+     } finally {
+       setIsSubmitting(false);
+     }
   };
 
   const currentQuantity = getQuantity();
