@@ -1,6 +1,5 @@
  import { motion, AnimatePresence } from "framer-motion";
- import { CheckCircle, Package, Truck, Phone, X } from "lucide-react";
- import { GetStartedButton } from "@/components/ui/get-started-button";
+ import { CheckCircle, Package, Phone, X, Sparkles } from "lucide-react";
  
  interface OrderSuccessModalProps {
    isOpen: boolean;
@@ -24,135 +23,139 @@
    return (
      <AnimatePresence>
        {isOpen && (
-         <>
+         <div className="fixed inset-0 z-[100] flex items-center justify-center">
            {/* Backdrop */}
            <motion.div
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
              exit={{ opacity: 0 }}
              onClick={onClose}
-             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+             className="absolute inset-0 bg-background/80"
            />
  
-           {/* Modal */}
+           {/* Modal Container */}
            <motion.div
-             initial={{ opacity: 0, scale: 0.9, y: 20 }}
+             initial={{ opacity: 0, scale: 0.95, y: 10 }}
              animate={{ opacity: 1, scale: 1, y: 0 }}
-             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+             exit={{ opacity: 0, scale: 0.95, y: 10 }}
+             transition={{ type: "spring", damping: 30, stiffness: 400 }}
+             className="relative w-[calc(100%-2rem)] max-w-[420px] mx-4"
            >
-             <div className="bg-card border border-border/50 rounded-3xl shadow-2xl max-w-md w-full pointer-events-auto overflow-hidden">
-               {/* Close button */}
+             <div className="relative bg-card border border-border rounded-2xl shadow-2xl overflow-hidden">
+               {/* Close Button */}
                <button
                  onClick={onClose}
-                 className="absolute top-4 right-4 p-2 rounded-full bg-muted/50 hover:bg-muted transition-colors z-10"
+                 className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-background/80 hover:bg-background border border-border transition-colors"
+                 aria-label="Fermer"
                >
-                 <X className="w-5 h-5 text-muted-foreground" />
+                 <X className="w-4 h-4 text-muted-foreground" />
                </button>
  
-               {/* Success Header */}
-               <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-8 text-center relative overflow-hidden">
-                 {/* Decorative circles */}
-                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
-                 <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/15 rounded-full blur-2xl" />
-                 
+               {/* Header Section */}
+               <div className="relative bg-gradient-to-b from-primary/15 to-transparent px-6 pt-8 pb-6 text-center">
+                 {/* Success Icon */}
                  <motion.div
-                   initial={{ scale: 0 }}
-                   animate={{ scale: 1 }}
-                   transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                   className="relative"
+                   initial={{ scale: 0, rotate: -180 }}
+                   animate={{ scale: 1, rotate: 0 }}
+                   transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+                   className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground mb-4"
                  >
-                   <div className="w-20 h-20 mx-auto bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg shadow-primary/30">
-                     <CheckCircle className="w-10 h-10 text-primary-foreground" />
-                   </div>
+                   <CheckCircle className="w-8 h-8" strokeWidth={2.5} />
                  </motion.div>
  
+                 {/* Thank You Message */}
                  <motion.div
-                   initial={{ opacity: 0, y: 10 }}
+                   initial={{ opacity: 0, y: 8 }}
                    animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: 0.3 }}
+                   transition={{ delay: 0.2 }}
                  >
-                   <h2 className="font-display text-2xl md:text-3xl text-foreground mt-6 mb-2">
-                     Merci {firstName} ! 🎉
-                   </h2>
-                   <p className="text-muted-foreground">
-                     Votre commande a été enregistrée avec succès
+                   <div className="flex items-center justify-center gap-2 mb-2">
+                     <Sparkles className="w-5 h-5 text-primary" />
+                     <h2 className="font-display text-xl sm:text-2xl text-foreground">
+                       Merci {firstName} !
+                     </h2>
+                     <Sparkles className="w-5 h-5 text-primary" />
+                   </div>
+                   <p className="text-sm text-muted-foreground">
+                     Commande enregistrée avec succès
                    </p>
                  </motion.div>
                </div>
  
-               {/* Order Details */}
-               <div className="p-6 space-y-4">
+               {/* Content Section */}
+               <div className="px-6 pb-6 space-y-3">
+                 {/* Order Reference */}
                  <motion.div
-                   initial={{ opacity: 0, x: -20 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   transition={{ delay: 0.4 }}
-                   className="flex items-center gap-4 p-4 bg-muted/30 rounded-2xl"
-                 >
-                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                     <Package className="w-6 h-6 text-primary" />
-                   </div>
-                   <div className="flex-1">
-                     <p className="text-sm text-muted-foreground">Réf. commande</p>
-                     <p className="font-display text-foreground font-semibold">{orderRef}</p>
-                   </div>
-                 </motion.div>
- 
-                 <motion.div
-                   initial={{ opacity: 0, x: -20 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   transition={{ delay: 0.5 }}
-                   className="flex items-center gap-4 p-4 bg-muted/30 rounded-2xl"
-                 >
-                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                     <Truck className="w-6 h-6 text-primary" />
-                   </div>
-                   <div className="flex-1">
-                     <p className="text-sm text-muted-foreground">Produit</p>
-                     <p className="font-display text-foreground font-semibold">{productName}</p>
-                   </div>
-                 </motion.div>
- 
-                 <motion.div
-                   initial={{ opacity: 0, y: 10 }}
+                   initial={{ opacity: 0, y: 8 }}
                    animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: 0.6 }}
-                   className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-4 text-center"
+                   transition={{ delay: 0.3 }}
+                   className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl"
                  >
-                   <p className="text-sm text-muted-foreground mb-1">Total à payer</p>
-                   <p className="font-display text-3xl text-primary font-bold">{total} DH</p>
-                   <p className="text-xs text-muted-foreground mt-1">💵 Paiement à la livraison</p>
+                   <div className="w-10 h-10 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                     <Package className="w-5 h-5 text-primary" />
+                   </div>
+                   <div className="min-w-0 flex-1">
+                     <p className="text-xs text-muted-foreground">Référence</p>
+                     <p className="font-mono text-sm font-semibold text-foreground truncate">
+                       {orderRef}
+                     </p>
+                   </div>
                  </motion.div>
  
+                 {/* Product Name */}
+                 <motion.div
+                   initial={{ opacity: 0, y: 8 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: 0.35 }}
+                   className="p-3 bg-muted/50 rounded-xl"
+                 >
+                   <p className="text-xs text-muted-foreground mb-1">Produit</p>
+                   <p className="text-sm font-medium text-foreground line-clamp-2">
+                     {productName}
+                   </p>
+                 </motion.div>
+ 
+                 {/* Total Amount */}
+                 <motion.div
+                   initial={{ opacity: 0, y: 8 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: 0.4 }}
+                   className="p-4 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-xl text-center"
+                 >
+                   <p className="text-xs text-muted-foreground mb-1">Total à payer</p>
+                   <p className="font-display text-2xl sm:text-3xl text-primary font-bold">
+                     {total} DH
+                   </p>
+                   <p className="text-xs text-muted-foreground mt-1">
+                     💵 Paiement à la livraison
+                   </p>
+                 </motion.div>
+ 
+                 {/* Contact Notice */}
                  <motion.div
                    initial={{ opacity: 0 }}
                    animate={{ opacity: 1 }}
-                   transition={{ delay: 0.7 }}
-                   className="flex items-center gap-2 justify-center text-sm text-muted-foreground pt-2"
+                   transition={{ delay: 0.45 }}
+                   className="flex items-center justify-center gap-2 py-2 text-xs text-muted-foreground"
                  >
-                   <Phone className="w-4 h-4" />
-                   <span>Nous vous contacterons bientôt pour confirmer</span>
+                   <Phone className="w-3.5 h-3.5" />
+                   <span>Nous vous appellerons pour confirmer</span>
                  </motion.div>
  
-                 <motion.div
-                   initial={{ opacity: 0, y: 10 }}
+                 {/* CTA Button */}
+                 <motion.button
+                   initial={{ opacity: 0, y: 8 }}
                    animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: 0.8 }}
-                   className="pt-4"
+                   transition={{ delay: 0.5 }}
+                   onClick={onClose}
+                   className="w-full py-3.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl transition-colors text-sm"
                  >
-                   <GetStartedButton
-                     onClick={onClose}
-                     className="w-full justify-center"
-                     size="lg"
-                   >
-                     Continuer mes achats
-                   </GetStartedButton>
-                 </motion.div>
+                   Continuer mes achats
+                 </motion.button>
                </div>
              </div>
            </motion.div>
-         </>
+         </div>
        )}
      </AnimatePresence>
    );
